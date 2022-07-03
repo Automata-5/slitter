@@ -1,0 +1,1388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V16" />
+  <DocumentInfo>
+    <Created>2022-07-03T01:19:42.3621362Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Blocks.FC ID="0">
+    <AttributeList>
+      <AutoNumber>true</AutoNumber>
+      <HeaderAuthor />
+      <HeaderFamily />
+      <HeaderName />
+      <HeaderVersion>0.1</HeaderVersion>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
+  <Section Name="Input">
+    <Member Name="PosicionesCalculadas" Datatype="Array[0..6] of Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Posiciones requeridas de menor a mayor</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+  <Section Name="Output" />
+  <Section Name="InOut" />
+  <Section Name="Temp">
+    <Member Name="NumIzq" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Numero de posiciones a la izquierda</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="NumDer" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Numero de posiciones a la derecha</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="Prestar" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Numero de slitters que se prestaran de un lado a otro</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="i" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Iterador, tambien guarda cuantas marcas en la derecha fueron cubiertas por un prestamo</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="j" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Iterador, tambien guarda cuantas marcas en la izquierda fueron cubiertas por un prestamo</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="z" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Iterador de uso general</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="PosicionesAsignadas" Datatype="Array[0..6] of Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Posiciones ya asignadas a cada cabezal</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+  <Section Name="Constant">
+    <Member Name="AnchoMaquina" Datatype="Real" Accessibility="Public">
+      <StartValue>3000.0</StartValue>
+    </Member>
+    <Member Name="AnchoCabezal" Datatype="Int" Accessibility="Public">
+      <StartValue>100</StartValue>
+    </Member>
+  </Section>
+  <Section Name="Return">
+    <Member Name="Ret_Val" Datatype="Void" Accessibility="Public" />
+  </Section>
+</Sections></Interface>
+      <IsIECCheckEnabled>false</IsIECCheckEnabled>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <Name>AsignarPosicionesSlitters</Name>
+      <Number>4</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SetENOAutomatically>false</SetENOAutomatically>
+      <UDABlockProperties />
+      <UDAEnableTagReadback>false</UDAEnableTagReadback>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>Asignar valores de AnchoMaquina y AnchoCabezal
+
+La salida de posicionar slitters [FC1], arroja un array con todas las posiciones calculadas ordenadas de menor a mayor de izquierda a derecha, y los no usados los asigna en 0
+
+Se probará cuantas de esas marcas corresponden a la parte izquierda de la maquina y cuantos a la derecha. Asi se definirá que posicion le correspondera a cada cabezal en especifico.
+
+Existiran los casos en donde los cabezales de un lado no son los suficientes para satisfacer su lado, por lo que se pediran prestados del otro lado.
+
+La salida es el array con las posiciones asignadas a cada cabezal.
+
+Array de entrada
+[0,1,2,3,4,5,6]
+
+Formato de array de entrada
+
+i = izquierda, valores menores, siempre a la izquierda
+d = derecha, valores mayores, siempre a la derecha
+0 = no asignado
+
+                            |     Indice = NumIzq
+                            v
+[   i   ,   i   ,   i   ,   d   ,   d   ,   d   ,   0]
+                    ^
+                    |    Indice = NumIzq - 1
+
+
+Array de salida
+
+0 = 1101
+1= 1102                 Izquierda de la maquina
+2= 1103
+3= 1104
+
+4 = 1105
+5= 1106                Derecha de la maquina
+6= 1107
+
+</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Access Scope="LocalVariable" UId="21">
+    <Symbol UId="22">
+      <Component Name="i" UId="23" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="24" />
+  <Token Text=":=" UId="25" />
+  <Blank Num="1" UId="26" />
+  <Access Scope="LiteralConstant" UId="27">
+    <Constant UId="28">
+      <ConstantValue UId="30">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="31" />
+  <NewLine Num="1" UId="32" />
+  <Access Scope="LocalVariable" UId="33">
+    <Symbol UId="34">
+      <Component Name="j" UId="35" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="36" />
+  <Token Text=":=" UId="37" />
+  <Blank Num="1" UId="38" />
+  <Access Scope="LiteralConstant" UId="39">
+    <Constant UId="40">
+      <ConstantValue UId="42">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="43" />
+  <Blank Num="8" UId="44" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="45">
+    <Text UId="46">Inicializar iteradores</Text>
+  </LineComment>
+  <NewLine Num="1" UId="47" />
+  <Access Scope="LocalVariable" UId="48">
+    <Symbol UId="49">
+      <Component Name="z" UId="50" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="51" />
+  <Token Text=":=" UId="52" />
+  <Blank Num="1" UId="53" />
+  <Access Scope="LiteralConstant" UId="54">
+    <Constant UId="55">
+      <ConstantValue UId="57">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="58" />
+  <NewLine Num="3" UId="59" />
+  <Token Text="FOR" UId="60" />
+  <Blank Num="1" UId="61" />
+  <Access Scope="LocalVariable" UId="62">
+    <Symbol UId="63">
+      <Component Name="z" UId="64" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="65" />
+  <Token Text=":=" UId="66" />
+  <Blank Num="1" UId="67" />
+  <Access Scope="LiteralConstant" UId="68">
+    <Constant UId="69">
+      <ConstantValue UId="71">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="72" />
+  <Token Text="TO" UId="73" />
+  <Blank Num="1" UId="74" />
+  <Access Scope="LiteralConstant" UId="75">
+    <Constant UId="76">
+      <ConstantValue UId="78">4</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="79" />
+  <Token Text="-" UId="80" />
+  <Blank Num="1" UId="81" />
+  <Access Scope="LiteralConstant" UId="82">
+    <Constant UId="83">
+      <ConstantValue UId="85">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="86" />
+  <Token Text="DO" UId="87" />
+  <NewLine Num="1" UId="88" />
+  <Blank Num="4" UId="89" />
+  <Access Scope="LocalVariable" UId="90">
+    <Symbol UId="91">
+      <Component Name="PosicionesAsignadas" UId="92">
+        <Token Text="[" UId="93" />
+        <Access Scope="LocalVariable" UId="94">
+          <Symbol UId="95">
+            <Component Name="z" UId="96" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="97" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="98" />
+  <Token Text=":=" UId="99" />
+  <Blank Num="1" UId="100" />
+  <Access Scope="LocalConstant" UId="101">
+    <Constant Name="AnchoCabezal" UId="102" />
+  </Access>
+  <Blank Num="1" UId="105" />
+  <Token Text="/" UId="106" />
+  <Blank Num="1" UId="107" />
+  <Access Scope="LiteralConstant" UId="108">
+    <Constant UId="109">
+      <ConstantValue UId="111">2</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="112" />
+  <Token Text="+" UId="113" />
+  <Blank Num="1" UId="114" />
+  <Access Scope="LocalVariable" UId="115">
+    <Symbol UId="116">
+      <Component Name="z" UId="117" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="118" />
+  <Token Text="*" UId="119" />
+  <Blank Num="1" UId="120" />
+  <Access Scope="LocalConstant" UId="121">
+    <Constant Name="AnchoCabezal" UId="122" />
+  </Access>
+  <Token Text=";" UId="125" />
+  <Blank Num="5" UId="126" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="127">
+    <Text UId="128">Asigna desde izquierda a derecha las posiciones de reposo a los slitters de la izquierda, a un ancho de cabezal uno del otro</Text>
+  </LineComment>
+  <NewLine Num="1" UId="129" />
+  <Token Text="END_FOR" UId="130" />
+  <Token Text=";" UId="131" />
+  <NewLine Num="2" UId="132" />
+  <Token Text="FOR" UId="133" />
+  <Blank Num="1" UId="134" />
+  <Access Scope="LocalVariable" UId="135">
+    <Symbol UId="136">
+      <Component Name="z" UId="137" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="138" />
+  <Token Text=":=" UId="139" />
+  <Blank Num="1" UId="140" />
+  <Access Scope="LiteralConstant" UId="141">
+    <Constant UId="142">
+      <ConstantValue UId="144">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="145" />
+  <Token Text="TO" UId="146" />
+  <Blank Num="1" UId="147" />
+  <Access Scope="LiteralConstant" UId="148">
+    <Constant UId="149">
+      <ConstantValue UId="151">3</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="152" />
+  <Token Text="-" UId="153" />
+  <Blank Num="1" UId="154" />
+  <Access Scope="LiteralConstant" UId="155">
+    <Constant UId="156">
+      <ConstantValue UId="158">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="159" />
+  <Token Text="DO" UId="160" />
+  <NewLine Num="1" UId="161" />
+  <Blank Num="4" UId="162" />
+  <Access Scope="LocalVariable" UId="163">
+    <Symbol UId="164">
+      <Component Name="PosicionesAsignadas" UId="165">
+        <Token Text="[" UId="166" />
+        <Access Scope="LiteralConstant" UId="167">
+          <Constant UId="168">
+            <ConstantValue UId="170">6</ConstantValue>
+          </Constant>
+        </Access>
+        <Blank Num="1" UId="171" />
+        <Token Text="-" UId="172" />
+        <Blank Num="1" UId="173" />
+        <Access Scope="LocalVariable" UId="174">
+          <Symbol UId="175">
+            <Component Name="z" UId="176" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="177" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="178" />
+  <Token Text=":=" UId="179" />
+  <Blank Num="1" UId="180" />
+  <Access Scope="LocalConstant" UId="181">
+    <Constant Name="AnchoMaquina" UId="182" />
+  </Access>
+  <Blank Num="1" UId="185" />
+  <Token Text="-" UId="186" />
+  <Blank Num="1" UId="187" />
+  <Access Scope="LocalConstant" UId="188">
+    <Constant Name="AnchoCabezal" UId="189" />
+  </Access>
+  <Blank Num="1" UId="192" />
+  <Token Text="/" UId="193" />
+  <Blank Num="1" UId="194" />
+  <Access Scope="LiteralConstant" UId="195">
+    <Constant UId="196">
+      <ConstantValue UId="198">2</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="199" />
+  <Token Text="-" UId="200" />
+  <Blank Num="1" UId="201" />
+  <Access Scope="LocalVariable" UId="202">
+    <Symbol UId="203">
+      <Component Name="z" UId="204" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="205" />
+  <Token Text="*" UId="206" />
+  <Blank Num="1" UId="207" />
+  <Access Scope="LocalConstant" UId="208">
+    <Constant Name="AnchoCabezal" UId="209" />
+  </Access>
+  <Token Text=";" UId="212" />
+  <Blank Num="1" UId="213" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="214">
+    <Text UId="215">Asigna desde derecha a izquierda las posiciones de reposo a los slitters de la derecha, a un ancho de cabezal uno del otro</Text>
+  </LineComment>
+  <NewLine Num="1" UId="216" />
+  <Token Text="END_FOR" UId="217" />
+  <Token Text=";" UId="218" />
+  <NewLine Num="2" UId="219" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Valores de reposo con respecto a la maquina</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="6" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Asignar valores por defecto al array de salida</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Token Text="FOR" UId="21" />
+  <Blank Num="1" UId="22" />
+  <Access Scope="LocalVariable" UId="23">
+    <Symbol UId="24">
+      <Component Name="z" UId="25" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="26" />
+  <Token Text=":=" UId="27" />
+  <Blank Num="1" UId="28" />
+  <Access Scope="LiteralConstant" UId="29">
+    <Constant UId="30">
+      <ConstantValue UId="32">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="33" />
+  <Token Text="TO" UId="34" />
+  <Blank Num="1" UId="35" />
+  <Access Scope="LiteralConstant" UId="36">
+    <Constant UId="37">
+      <ConstantValue UId="39">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="40" />
+  <Token Text="-" UId="41" />
+  <Blank Num="1" UId="42" />
+  <Access Scope="LiteralConstant" UId="43">
+    <Constant UId="44">
+      <ConstantValue UId="46">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="47" />
+  <Token Text="DO" UId="48" />
+  <NewLine Num="1" UId="49" />
+  <Blank Num="4" UId="50" />
+  <NewLine Num="1" UId="51" />
+  <Blank Num="4" UId="52" />
+  <Token Text="IF" UId="53" />
+  <Blank Num="1" UId="54" />
+  <Access Scope="LocalVariable" UId="55">
+    <Symbol UId="56">
+      <Component Name="PosicionesCalculadas" UId="57">
+        <Token Text="[" UId="58" />
+        <Access Scope="LocalVariable" UId="59">
+          <Symbol UId="60">
+            <Component Name="z" UId="61" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="62" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="63" />
+  <Token Text="&lt;=" UId="64" />
+  <Blank Num="1" UId="65" />
+  <Access Scope="LocalConstant" UId="66">
+    <Constant Name="AnchoMaquina" UId="67" />
+  </Access>
+  <Token Text="/" UId="70" />
+  <Access Scope="LiteralConstant" UId="71">
+    <Constant UId="72">
+      <ConstantValue UId="74">2</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="75" />
+  <Token Text="AND" UId="76" />
+  <Blank Num="1" UId="77" />
+  <Access Scope="LocalVariable" UId="78">
+    <Symbol UId="79">
+      <Component Name="PosicionesCalculadas" UId="80">
+        <Token Text="[" UId="81" />
+        <Access Scope="LocalVariable" UId="82">
+          <Symbol UId="83">
+            <Component Name="z" UId="84" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="85" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="86" />
+  <Token Text="&lt;&gt;" UId="87" />
+  <Blank Num="1" UId="88" />
+  <Access Scope="LiteralConstant" UId="89">
+    <Constant UId="90">
+      <ConstantValue UId="92">0.0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="93" />
+  <Token Text="THEN" UId="94" />
+  <NewLine Num="1" UId="95" />
+  <Blank Num="8" UId="96" />
+  <Access Scope="LocalVariable" UId="97">
+    <Symbol UId="98">
+      <Component Name="NumIzq" UId="99" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="100" />
+  <Token Text=":=" UId="101" />
+  <Blank Num="1" UId="102" />
+  <Access Scope="LocalVariable" UId="103">
+    <Symbol UId="104">
+      <Component Name="NumIzq" UId="105" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="106" />
+  <Token Text="+" UId="107" />
+  <Blank Num="1" UId="108" />
+  <Access Scope="LiteralConstant" UId="109">
+    <Constant UId="110">
+      <ConstantValue UId="112">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="113" />
+  <NewLine Num="1" UId="114" />
+  <Blank Num="4" UId="115" />
+  <Token Text="END_IF" UId="116" />
+  <Token Text=";" UId="117" />
+  <NewLine Num="2" UId="118" />
+  <Blank Num="4" UId="119" />
+  <Token Text="IF" UId="120" />
+  <Blank Num="1" UId="121" />
+  <Access Scope="LocalVariable" UId="122">
+    <Symbol UId="123">
+      <Component Name="PosicionesCalculadas" UId="124">
+        <Token Text="[" UId="125" />
+        <Access Scope="LocalVariable" UId="126">
+          <Symbol UId="127">
+            <Component Name="z" UId="128" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="129" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="130" />
+  <Token Text="&gt;" UId="131" />
+  <Blank Num="1" UId="132" />
+  <Access Scope="LocalConstant" UId="133">
+    <Constant Name="AnchoMaquina" UId="134" />
+  </Access>
+  <Blank Num="1" UId="137" />
+  <Token Text="/" UId="138" />
+  <Blank Num="1" UId="139" />
+  <Access Scope="LiteralConstant" UId="140">
+    <Constant UId="141">
+      <ConstantValue UId="143">2</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="144" />
+  <Token Text="THEN" UId="145" />
+  <NewLine Num="1" UId="146" />
+  <Blank Num="8" UId="147" />
+  <Access Scope="LocalVariable" UId="148">
+    <Symbol UId="149">
+      <Component Name="NumDer" UId="150" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="151" />
+  <Token Text=":=" UId="152" />
+  <Blank Num="1" UId="153" />
+  <Access Scope="LocalVariable" UId="154">
+    <Symbol UId="155">
+      <Component Name="NumDer" UId="156" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="157" />
+  <Token Text="+" UId="158" />
+  <Blank Num="1" UId="159" />
+  <Access Scope="LiteralConstant" UId="160">
+    <Constant UId="161">
+      <ConstantValue UId="163">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="164" />
+  <NewLine Num="1" UId="165" />
+  <Blank Num="4" UId="166" />
+  <Token Text="END_IF" UId="167" />
+  <Token Text=";" UId="168" />
+  <NewLine Num="2" UId="169" />
+  <Blank Num="4" UId="170" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="171">
+    <Text UId="172">Si no se aginó posicion calculada, = 0, no cuenta nada</Text>
+  </LineComment>
+  <NewLine Num="1" UId="173" />
+  <Token Text="END_FOR" UId="174" />
+  <Token Text=";" UId="175" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Recorrer el array de posiciones calculadas </Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="B" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Contar cuantos slitters iran a la izquierda y cuantos a la derecha</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="D" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Token Text="IF" UId="21" />
+  <Blank Num="1" UId="22" />
+  <Access Scope="LocalVariable" UId="23">
+    <Symbol UId="24">
+      <Component Name="NumDer" UId="25" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="26" />
+  <Token Text="&gt;" UId="27" />
+  <Blank Num="1" UId="28" />
+  <Access Scope="LiteralConstant" UId="29">
+    <Constant UId="30">
+      <ConstantValue UId="32">3</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="33" />
+  <Token Text="THEN" UId="34" />
+  <Blank Num="9" UId="35" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="36">
+    <Text UId="37">Solo hay 3 slitters en la derecha</Text>
+  </LineComment>
+  <NewLine Num="1" UId="38" />
+  <Blank Num="4" UId="39" />
+  <Access Scope="LocalVariable" UId="40">
+    <Symbol UId="41">
+      <Component Name="Prestar" UId="42" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="43" />
+  <Token Text=":=" UId="44" />
+  <Blank Num="1" UId="45" />
+  <Access Scope="LocalVariable" UId="46">
+    <Symbol UId="47">
+      <Component Name="NumDer" UId="48" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="49" />
+  <Token Text="-" UId="50" />
+  <Blank Num="1" UId="51" />
+  <Access Scope="LiteralConstant" UId="52">
+    <Constant UId="53">
+      <ConstantValue UId="55">3</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="56" />
+  <Blank Num="4" UId="57" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="58">
+    <Text UId="59">Numero de slitters que se necesitan del otro lado</Text>
+  </LineComment>
+  <NewLine Num="1" UId="60" />
+  <Blank Num="4" UId="61" />
+  <NewLine Num="1" UId="62" />
+  <Blank Num="4" UId="63" />
+  <Token Text="FOR" UId="64" />
+  <Blank Num="1" UId="65" />
+  <Access Scope="LocalVariable" UId="66">
+    <Symbol UId="67">
+      <Component Name="i" UId="68" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="69" />
+  <Token Text=":=" UId="70" />
+  <Blank Num="1" UId="71" />
+  <Access Scope="LiteralConstant" UId="72">
+    <Constant UId="73">
+      <ConstantValue UId="75">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="76" />
+  <Token Text="TO" UId="77" />
+  <Blank Num="1" UId="78" />
+  <Access Scope="LocalVariable" UId="79">
+    <Symbol UId="80">
+      <Component Name="Prestar" UId="81" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="82" />
+  <Token Text="-" UId="83" />
+  <Blank Num="1" UId="84" />
+  <Access Scope="LiteralConstant" UId="85">
+    <Constant UId="86">
+      <ConstantValue UId="88">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="89" />
+  <Token Text="DO" UId="90" />
+  <NewLine Num="1" UId="91" />
+  <Blank Num="8" UId="92" />
+  <Access Scope="LocalVariable" UId="93">
+    <Symbol UId="94">
+      <Component Name="PosicionesAsignadas" UId="95">
+        <Token Text="[" UId="96" />
+        <Access Scope="LiteralConstant" UId="97">
+          <Constant UId="98">
+            <ConstantValue UId="100">3</ConstantValue>
+          </Constant>
+        </Access>
+        <Blank Num="1" UId="101" />
+        <Token Text="-" UId="102" />
+        <Blank Num="1" UId="103" />
+        <Access Scope="LocalVariable" UId="104">
+          <Symbol UId="105">
+            <Component Name="i" UId="106" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="107" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="108" />
+  <Token Text=":=" UId="109" />
+  <Blank Num="1" UId="110" />
+  <Access Scope="LocalVariable" UId="111">
+    <Symbol UId="112">
+      <Component Name="PosicionesCalculadas" UId="113">
+        <Token Text="[" UId="114" />
+        <Access Scope="LocalVariable" UId="115">
+          <Symbol UId="116">
+            <Component Name="NumIzq" UId="117" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="118" />
+        <Token Text="+" UId="119" />
+        <Blank Num="1" UId="120" />
+        <Token Text="(" UId="121" />
+        <Access Scope="LocalVariable" UId="122">
+          <Symbol UId="123">
+            <Component Name="Prestar" UId="124" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="125" />
+        <Token Text="-" UId="126" />
+        <Blank Num="1" UId="127" />
+        <Access Scope="LiteralConstant" UId="128">
+          <Constant UId="129">
+            <ConstantValue UId="131">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text=")" UId="132" />
+        <Blank Num="1" UId="133" />
+        <Token Text="-" UId="134" />
+        <Blank Num="1" UId="135" />
+        <Access Scope="LocalVariable" UId="136">
+          <Symbol UId="137">
+            <Component Name="i" UId="138" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="139" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="140" />
+  <Blank Num="2" UId="141" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="142">
+    <Text UId="143">Asigna desde el cabezal 1104 hacia la izquierda, los primeros valores de las posiciones a la derecha</Text>
+  </LineComment>
+  <NewLine Num="1" UId="144" />
+  <Blank Num="4" UId="145" />
+  <Token Text="END_FOR" UId="146" />
+  <Token Text=";" UId="147" />
+  <NewLine Num="1" UId="148" />
+  <Token Text="END_IF" UId="149" />
+  <Token Text=";" UId="150" />
+  <NewLine Num="2" UId="151" />
+  <Token Text="IF" UId="152" />
+  <Blank Num="1" UId="153" />
+  <Access Scope="LocalVariable" UId="154">
+    <Symbol UId="155">
+      <Component Name="NumIzq" UId="156" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="157" />
+  <Token Text="&gt;" UId="158" />
+  <Blank Num="1" UId="159" />
+  <Access Scope="LiteralConstant" UId="160">
+    <Constant UId="161">
+      <ConstantValue UId="163">4</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="164" />
+  <Token Text="THEN" UId="165" />
+  <Blank Num="9" UId="166" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="167">
+    <Text UId="168">Solo hay 4 slitters en la izquierda</Text>
+  </LineComment>
+  <NewLine Num="1" UId="169" />
+  <Blank Num="4" UId="170" />
+  <Access Scope="LocalVariable" UId="171">
+    <Symbol UId="172">
+      <Component Name="Prestar" UId="173" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="174" />
+  <Token Text=":=" UId="175" />
+  <Blank Num="1" UId="176" />
+  <Access Scope="LocalVariable" UId="177">
+    <Symbol UId="178">
+      <Component Name="NumIzq" UId="179" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="180" />
+  <Token Text="-" UId="181" />
+  <Blank Num="1" UId="182" />
+  <Access Scope="LiteralConstant" UId="183">
+    <Constant UId="184">
+      <ConstantValue UId="186">4</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="187" />
+  <Blank Num="4" UId="188" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="189">
+    <Text UId="190">Numero de slitters que se necesitan del otro lado</Text>
+  </LineComment>
+  <NewLine Num="1" UId="191" />
+  <Blank Num="4" UId="192" />
+  <NewLine Num="1" UId="193" />
+  <Blank Num="4" UId="194" />
+  <Token Text="FOR" UId="195" />
+  <Blank Num="1" UId="196" />
+  <Access Scope="LocalVariable" UId="197">
+    <Symbol UId="198">
+      <Component Name="j" UId="199" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="200" />
+  <Token Text=":=" UId="201" />
+  <Blank Num="1" UId="202" />
+  <Access Scope="LiteralConstant" UId="203">
+    <Constant UId="204">
+      <ConstantValue UId="206">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="207" />
+  <Token Text="TO" UId="208" />
+  <Blank Num="1" UId="209" />
+  <Access Scope="LocalVariable" UId="210">
+    <Symbol UId="211">
+      <Component Name="Prestar" UId="212" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="213" />
+  <Token Text="-" UId="214" />
+  <Blank Num="1" UId="215" />
+  <Access Scope="LiteralConstant" UId="216">
+    <Constant UId="217">
+      <ConstantValue UId="219">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="220" />
+  <Token Text="DO" UId="221" />
+  <NewLine Num="1" UId="222" />
+  <Blank Num="8" UId="223" />
+  <Access Scope="LocalVariable" UId="224">
+    <Symbol UId="225">
+      <Component Name="PosicionesAsignadas" UId="226">
+        <Token Text="[" UId="227" />
+        <Access Scope="LiteralConstant" UId="228">
+          <Constant UId="229">
+            <ConstantValue UId="231">4</ConstantValue>
+          </Constant>
+        </Access>
+        <Blank Num="1" UId="232" />
+        <Token Text="+" UId="233" />
+        <Blank Num="1" UId="234" />
+        <Access Scope="LocalVariable" UId="235">
+          <Symbol UId="236">
+            <Component Name="j" UId="237" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="238" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="239" />
+  <Token Text=":=" UId="240" />
+  <Blank Num="1" UId="241" />
+  <Access Scope="LocalVariable" UId="242">
+    <Symbol UId="243">
+      <Component Name="PosicionesCalculadas" UId="244">
+        <Token Text="[" UId="245" />
+        <Token Text="(" UId="246" />
+        <Access Scope="LocalVariable" UId="247">
+          <Symbol UId="248">
+            <Component Name="NumIzq" UId="249" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="250" />
+        <Token Text="-" UId="251" />
+        <Blank Num="1" UId="252" />
+        <Access Scope="LiteralConstant" UId="253">
+          <Constant UId="254">
+            <ConstantValue UId="256">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text=")" UId="257" />
+        <Blank Num="1" UId="258" />
+        <Token Text="-" UId="259" />
+        <Blank Num="1" UId="260" />
+        <Token Text="(" UId="261" />
+        <Access Scope="LocalVariable" UId="262">
+          <Symbol UId="263">
+            <Component Name="Prestar" UId="264" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="265" />
+        <Token Text="-" UId="266" />
+        <Blank Num="1" UId="267" />
+        <Access Scope="LiteralConstant" UId="268">
+          <Constant UId="269">
+            <ConstantValue UId="271">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text=")" UId="272" />
+        <Blank Num="1" UId="273" />
+        <Token Text="+" UId="274" />
+        <Blank Num="1" UId="275" />
+        <Access Scope="LocalVariable" UId="276">
+          <Symbol UId="277">
+            <Component Name="j" UId="278" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="279" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="280" />
+  <Blank Num="2" UId="281" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="282">
+    <Text UId="283">Asigna desde el cabezal 1105 hacia la derecha, los ultimos valores de las posiciones a la izquierda</Text>
+  </LineComment>
+  <NewLine Num="1" UId="284" />
+  <Blank Num="4" UId="285" />
+  <Token Text="END_FOR" UId="286" />
+  <Token Text=";" UId="287" />
+  <NewLine Num="1" UId="288" />
+  <Token Text="END_IF" UId="289" />
+  <Token Text=";" UId="290" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Posiciona al slitter mas cercano a la posicion requerida</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="10" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="11" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Definir si se requiere prestar un slitter de un lado a otro</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="12" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <LineComment Inserted="false" NoClosingBracket="false" UId="21">
+    <Text UId="22"> i lleva la cuenta de cuantos slitters de la izquierda se prestaron</Text>
+  </LineComment>
+  <NewLine Num="1" UId="23" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="24">
+    <Text UId="25"> j lleva la cuenta de cuantos slitters de la derecha se prestaron</Text>
+  </LineComment>
+  <NewLine Num="2" UId="26" />
+  <Token Text="FOR" UId="27" />
+  <Blank Num="1" UId="28" />
+  <Access Scope="LocalVariable" UId="29">
+    <Symbol UId="30">
+      <Component Name="z" UId="31" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="32" />
+  <Token Text=":=" UId="33" />
+  <Blank Num="1" UId="34" />
+  <Access Scope="LiteralConstant" UId="35">
+    <Constant UId="36">
+      <ConstantValue UId="38">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="39" />
+  <Token Text="TO" UId="40" />
+  <Blank Num="1" UId="41" />
+  <Access Scope="LocalVariable" UId="42">
+    <Symbol UId="43">
+      <Component Name="NumIzq" UId="44" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="45" />
+  <Token Text="-" UId="46" />
+  <Blank Num="1" UId="47" />
+  <Access Scope="LocalVariable" UId="48">
+    <Symbol UId="49">
+      <Component Name="j" UId="50" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="51" />
+  <Token Text="-" UId="52" />
+  <Blank Num="1" UId="53" />
+  <Access Scope="LiteralConstant" UId="54">
+    <Constant UId="55">
+      <ConstantValue UId="57">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="58" />
+  <Token Text="DO" UId="59" />
+  <Blank Num="1" UId="60" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="61">
+    <Text UId="62">Marcas en la izquierda menos las marcas que ya fueron cubiertas y menos 1 por indice de array</Text>
+  </LineComment>
+  <NewLine Num="1" UId="63" />
+  <Blank Num="4" UId="64" />
+  <Access Scope="LocalVariable" UId="65">
+    <Symbol UId="66">
+      <Component Name="PosicionesAsignadas" UId="67">
+        <Token Text="[" UId="68" />
+        <Access Scope="LiteralConstant" UId="69">
+          <Constant UId="70">
+            <ConstantValue UId="72">3</ConstantValue>
+          </Constant>
+        </Access>
+        <Blank Num="1" UId="73" />
+        <Token Text="-" UId="74" />
+        <Blank Num="1" UId="75" />
+        <Access Scope="LocalVariable" UId="76">
+          <Symbol UId="77">
+            <Component Name="i" UId="78" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="79" />
+        <Token Text="-" UId="80" />
+        <Blank Num="1" UId="81" />
+        <Access Scope="LocalVariable" UId="82">
+          <Symbol UId="83">
+            <Component Name="z" UId="84" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="85" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="86" />
+  <Token Text=":=" UId="87" />
+  <Blank Num="1" UId="88" />
+  <Access Scope="LocalVariable" UId="89">
+    <Symbol UId="90">
+      <Component Name="PosicionesCalculadas" UId="91">
+        <Token Text="[" UId="92" />
+        <Token Text="(" UId="93" />
+        <Access Scope="LocalVariable" UId="94">
+          <Symbol UId="95">
+            <Component Name="NumIzq" UId="96" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="97" />
+        <Token Text="-" UId="98" />
+        <Blank Num="1" UId="99" />
+        <Access Scope="LiteralConstant" UId="100">
+          <Constant UId="101">
+            <ConstantValue UId="103">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text=")" UId="104" />
+        <Blank Num="1" UId="105" />
+        <Token Text="-" UId="106" />
+        <Blank Num="1" UId="107" />
+        <Access Scope="LocalVariable" UId="108">
+          <Symbol UId="109">
+            <Component Name="j" UId="110" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="111" />
+        <Token Text="-" UId="112" />
+        <Blank Num="1" UId="113" />
+        <Access Scope="LocalVariable" UId="114">
+          <Symbol UId="115">
+            <Component Name="z" UId="116" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="117" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="118" />
+  <Blank Num="5" UId="119" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="120">
+    <Text UId="121">Posiciona las marcas que quedan del lado izquierdo, de derecha a izquierda comenzando por donde se quedaron en el proceso de prestamo</Text>
+  </LineComment>
+  <NewLine Num="1" UId="122" />
+  <Blank Num="4" UId="123" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="124">
+    <Text UId="125">Se le resta i en pos Asignadas porque esta hace referencia a que un slitter de la izquierda se fue a la derecha, la resta es para mover el indice a la izquierda</Text>
+  </LineComment>
+  <NewLine Num="1" UId="126" />
+  <Blank Num="4" UId="127" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="128">
+    <Text UId="129">Se le resta j en Pos calculadas porque hace referencia a que una posicion de la izquierda ya fue cubierta, la resta es para mover el indice a la izquierda</Text>
+  </LineComment>
+  <NewLine Num="1" UId="130" />
+  <Token Text="END_FOR" UId="131" />
+  <Token Text=";" UId="132" />
+  <NewLine Num="2" UId="133" />
+  <Token Text="FOR" UId="134" />
+  <Blank Num="1" UId="135" />
+  <Access Scope="LocalVariable" UId="136">
+    <Symbol UId="137">
+      <Component Name="z" UId="138" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="139" />
+  <Token Text=":=" UId="140" />
+  <Blank Num="1" UId="141" />
+  <Access Scope="LiteralConstant" UId="142">
+    <Constant UId="143">
+      <ConstantValue UId="145">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="146" />
+  <Token Text="TO" UId="147" />
+  <Blank Num="1" UId="148" />
+  <Access Scope="LocalVariable" UId="149">
+    <Symbol UId="150">
+      <Component Name="NumDer" UId="151" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="152" />
+  <Token Text="-" UId="153" />
+  <Blank Num="1" UId="154" />
+  <Access Scope="LocalVariable" UId="155">
+    <Symbol UId="156">
+      <Component Name="i" UId="157" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="158" />
+  <Token Text="-" UId="159" />
+  <Blank Num="1" UId="160" />
+  <Access Scope="LiteralConstant" UId="161">
+    <Constant UId="162">
+      <ConstantValue UId="164">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="165" />
+  <Token Text="DO" UId="166" />
+  <Blank Num="1" UId="167" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="168">
+    <Text UId="169">Marcas en la derecha menos las marcas que ya fueron cubiertas y menos 1 por indice de array</Text>
+  </LineComment>
+  <NewLine Num="1" UId="170" />
+  <Blank Num="4" UId="171" />
+  <Access Scope="LocalVariable" UId="172">
+    <Symbol UId="173">
+      <Component Name="PosicionesAsignadas" UId="174">
+        <Token Text="[" UId="175" />
+        <Access Scope="LiteralConstant" UId="176">
+          <Constant UId="177">
+            <ConstantValue UId="179">4</ConstantValue>
+          </Constant>
+        </Access>
+        <Blank Num="1" UId="180" />
+        <Token Text="+" UId="181" />
+        <Blank Num="1" UId="182" />
+        <Access Scope="LocalVariable" UId="183">
+          <Symbol UId="184">
+            <Component Name="j" UId="185" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="186" />
+        <Token Text="+" UId="187" />
+        <Blank Num="1" UId="188" />
+        <Access Scope="LocalVariable" UId="189">
+          <Symbol UId="190">
+            <Component Name="z" UId="191" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="192" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="193" />
+  <Token Text=":=" UId="194" />
+  <Blank Num="1" UId="195" />
+  <Access Scope="LocalVariable" UId="196">
+    <Symbol UId="197">
+      <Component Name="PosicionesCalculadas" UId="198">
+        <Token Text="[" UId="199" />
+        <Access Scope="LocalVariable" UId="200">
+          <Symbol UId="201">
+            <Component Name="NumIzq" UId="202" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="203" />
+        <Token Text="+" UId="204" />
+        <Blank Num="1" UId="205" />
+        <Access Scope="LocalVariable" UId="206">
+          <Symbol UId="207">
+            <Component Name="i" UId="208" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="209" />
+        <Token Text="+" UId="210" />
+        <Blank Num="1" UId="211" />
+        <Access Scope="LocalVariable" UId="212">
+          <Symbol UId="213">
+            <Component Name="z" UId="214" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="215" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="216" />
+  <Blank Num="11" UId="217" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="218">
+    <Text UId="219">Posiciona las marcas que quedan del lado derecho, de izquierda a derecha comenzando por donde se quedaron en el proceso de prestamo</Text>
+  </LineComment>
+  <NewLine Num="1" UId="220" />
+  <Blank Num="4" UId="221" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="222">
+    <Text UId="223">Se le suma j en pos Asignadas porque esta hace referencia a que un slitter de la derecha se fue a la izquierda, la suma es para mover el indice a la derecha</Text>
+  </LineComment>
+  <NewLine Num="1" UId="224" />
+  <Blank Num="4" UId="225" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="226">
+    <Text UId="227">Se le suma i en Pos calculadas porque hace referencia a que una posicion de la derecha ya fue cubierta, la suma es para mover el indice a la derecha</Text>
+  </LineComment>
+  <NewLine Num="1" UId="228" />
+  <Token Text="END_FOR" UId="229" />
+  <Token Text=";" UId="230" />
+  <NewLine Num="3" UId="231" />
+  <Token Text="FOR" UId="232" />
+  <Blank Num="1" UId="233" />
+  <Access Scope="LocalVariable" UId="234">
+    <Symbol UId="235">
+      <Component Name="z" UId="236" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="237" />
+  <Token Text=":=" UId="238" />
+  <Blank Num="1" UId="239" />
+  <Access Scope="LiteralConstant" UId="240">
+    <Constant UId="241">
+      <ConstantValue UId="243">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="244" />
+  <Token Text="TO" UId="245" />
+  <Blank Num="1" UId="246" />
+  <Access Scope="LiteralConstant" UId="247">
+    <Constant UId="248">
+      <ConstantValue UId="250">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="251" />
+  <Token Text="-" UId="252" />
+  <Blank Num="1" UId="253" />
+  <Access Scope="LiteralConstant" UId="254">
+    <Constant UId="255">
+      <ConstantValue UId="257">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="258" />
+  <Token Text="DO" UId="259" />
+  <NewLine Num="1" UId="260" />
+  <Blank Num="4" UId="261" />
+  <Access Scope="GlobalVariable" UId="262">
+    <Symbol UId="263">
+      <Component Name="HMItoPLC" UId="264" />
+      <Token Text="." UId="265" />
+      <Component Name="SpPosition" UId="266">
+        <Token Text="[" UId="267" />
+        <Access Scope="LocalVariable" UId="268">
+          <Symbol UId="269">
+            <Component Name="z" UId="270" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="271" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="272" />
+  <Token Text=":=" UId="273" />
+  <Blank Num="1" UId="274" />
+  <Access Scope="LocalVariable" UId="275">
+    <Symbol UId="276">
+      <Component Name="PosicionesAsignadas" UId="277">
+        <Token Text="[" UId="278" />
+        <Access Scope="LocalVariable" UId="279">
+          <Symbol UId="280">
+            <Component Name="z" UId="281" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="282" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="283" />
+  <NewLine Num="1" UId="284" />
+  <Token Text="END_FOR" UId="285" />
+  <Token Text=";" UId="286" />
+  <NewLine Num="3" UId="287" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="288">
+    <Text UId="289">Fin </Text>
+  </LineComment>
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="13" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="14" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Despues de posicionar los que se prestaron se posicionan el resto</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="15" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="16" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Posicionar el resto de slitters</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="17" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="18" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>Asignar posiciones a Slitters</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.FC>
+</Document>

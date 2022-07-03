@@ -1,0 +1,1032 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V16" />
+  <DocumentInfo>
+    <Created>2022-07-03T01:19:41.5198927Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Blocks.FC ID="0">
+    <AttributeList>
+      <AutoNumber>true</AutoNumber>
+      <HeaderAuthor />
+      <HeaderFamily />
+      <HeaderName />
+      <HeaderVersion>0.1</HeaderVersion>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
+  <Section Name="Input">
+    <Member Name="i_enfocado" Datatype="Int" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Cabezal a la estudiado</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="Servos" Datatype="Array[0..50] of &quot;MC_PosAxis&quot;" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Array de datos de servos</MultiLanguageText>
+      </Comment>
+      <Sections>
+        <Section Name="None">
+          <Member Name="MC_reset" Datatype="Bool" />
+          <Member Name="MC_set_home" Datatype="Bool" />
+          <Member Name="MC_power" Datatype="Bool" />
+          <Member Name="MC_jog_fw" Datatype="Bool" />
+          <Member Name="MC_jog_bw" Datatype="Bool" />
+          <Member Name="MC_exe_abs_move" Datatype="Bool" />
+          <Member Name="MC_move_direction" Datatype="Int" />
+          <Member Name="MC_halt" Datatype="Bool" />
+          <Member Name="Sp_Abs_pos" Datatype="LReal" />
+          <Member Name="Def_Home_Sp" Datatype="LReal" />
+          <Member Name="Actual_speed" Datatype="LReal" />
+          <Member Name="Actual_Velocity" Datatype="LReal" />
+          <Member Name="Actual_position" Datatype="Real" />
+          <Member Name="MC_standstill" Datatype="Bool" />
+          <Member Name="MC_error" Datatype="Bool" />
+          <Member Name="MC_done" Datatype="Bool" />
+          <Member Name="MC_busy" Datatype="Bool" />
+          <Member Name="Drive_Enable" Datatype="Bool" />
+        </Section>
+      </Sections>
+    </Member>
+  </Section>
+  <Section Name="Output">
+    <Member Name="Paro" Datatype="Bool" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Señal de paro total del elemento</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+  <Section Name="InOut" />
+  <Section Name="Temp">
+    <Member Name="DeltaIzquierda" Datatype="Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Distancia entre elemento izquierdo y el evaluado</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="DeltaDerecha" Datatype="Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Distancia entre elemento derecho y el evaluado</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="Posicion" Datatype="Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Posicion del elemento evaluado</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="ElementoIzquierda" Datatype="Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Posicion del elemento a la izquierda</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="ElementoDerecha" Datatype="Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Posicion del elemento a la derecha</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+  <Section Name="Constant">
+    <Member Name="AnchoCabezal" Datatype="Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Un cabezal mide alrededor de 98.8 de ancho</MultiLanguageText>
+      </Comment>
+      <StartValue>100.0</StartValue>
+    </Member>
+    <Member Name="AnchoCabezal/2" Datatype="Real" Accessibility="Public">
+      <StartValue>50.0</StartValue>
+    </Member>
+    <Member Name="AnchoMaquina" Datatype="Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Ancho de la maquina</MultiLanguageText>
+      </Comment>
+      <StartValue>3000.0</StartValue>
+    </Member>
+  </Section>
+  <Section Name="Return">
+    <Member Name="Ret_Val" Datatype="Void" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Nada</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+</Sections></Interface>
+      <IsIECCheckEnabled>false</IsIECCheckEnabled>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <Name>ProbarColision</Name>
+      <Number>2</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SetENOAutomatically>false</SetENOAutomatically>
+      <UDABlockProperties />
+      <UDAEnableTagReadback>false</UDAEnableTagReadback>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <NewLine Num="1" UId="21" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="22">
+    <Text UId="23">Cabezales que tienen la izquierda libre</Text>
+  </LineComment>
+  <NewLine Num="2" UId="24" />
+  <Token Text="IF" UId="25" />
+  <Blank Num="1" UId="26" />
+  <Access Scope="LocalVariable" UId="27">
+    <Symbol UId="28">
+      <Component Name="i_enfocado" UId="29" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="30" />
+  <Token Text="=" UId="31" />
+  <Blank Num="1" UId="32" />
+  <Access Scope="LiteralConstant" UId="33">
+    <Constant UId="34">
+      <ConstantValue UId="36">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="37" />
+  <Token Text="OR" UId="38" />
+  <Blank Num="1" UId="39" />
+  <Access Scope="LocalVariable" UId="40">
+    <Symbol UId="41">
+      <Component Name="i_enfocado" UId="42" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="43" />
+  <Token Text="=" UId="44" />
+  <Blank Num="1" UId="45" />
+  <Access Scope="LiteralConstant" UId="46">
+    <Constant UId="47">
+      <ConstantValue UId="49">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="50" />
+  <Token Text="OR" UId="51" />
+  <Blank Num="1" UId="52" />
+  <Access Scope="LocalVariable" UId="53">
+    <Symbol UId="54">
+      <Component Name="i_enfocado" UId="55" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="56" />
+  <Token Text="=" UId="57" />
+  <Blank Num="1" UId="58" />
+  <Access Scope="LiteralConstant" UId="59">
+    <Constant UId="60">
+      <ConstantValue UId="62">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="63" />
+  <Token Text="+" UId="64" />
+  <Blank Num="1" UId="65" />
+  <Access Scope="LiteralConstant" UId="66">
+    <Constant UId="67">
+      <ConstantValue UId="69">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="70" />
+  <Token Text="OR" UId="71" />
+  <Blank Num="1" UId="72" />
+  <Access Scope="LocalVariable" UId="73">
+    <Symbol UId="74">
+      <Component Name="i_enfocado" UId="75" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="76" />
+  <Token Text="=" UId="77" />
+  <Blank Num="1" UId="78" />
+  <Access Scope="LiteralConstant" UId="79">
+    <Constant UId="80">
+      <ConstantValue UId="82">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="83" />
+  <Token Text="+" UId="84" />
+  <Blank Num="1" UId="85" />
+  <Access Scope="LiteralConstant" UId="86">
+    <Constant UId="87">
+      <ConstantValue UId="89">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="90" />
+  <Token Text="+" UId="91" />
+  <Blank Num="1" UId="92" />
+  <Access Scope="LiteralConstant" UId="93">
+    <Constant UId="94">
+      <ConstantValue UId="96">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="97" />
+  <Token Text="OR" UId="98" />
+  <Blank Num="1" UId="99" />
+  <Access Scope="LocalVariable" UId="100">
+    <Symbol UId="101">
+      <Component Name="i_enfocado" UId="102" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="103" />
+  <Token Text="=" UId="104" />
+  <Blank Num="1" UId="105" />
+  <Access Scope="LiteralConstant" UId="106">
+    <Constant UId="107">
+      <ConstantValue UId="109">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="110" />
+  <Token Text="+" UId="111" />
+  <Blank Num="1" UId="112" />
+  <Access Scope="LiteralConstant" UId="113">
+    <Constant UId="114">
+      <ConstantValue UId="116">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="117" />
+  <Token Text="+" UId="118" />
+  <Blank Num="1" UId="119" />
+  <Access Scope="LiteralConstant" UId="120">
+    <Constant UId="121">
+      <ConstantValue UId="123">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="124" />
+  <Token Text="+" UId="125" />
+  <Blank Num="1" UId="126" />
+  <Access Scope="LiteralConstant" UId="127">
+    <Constant UId="128">
+      <ConstantValue UId="130">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="131" />
+  <Token Text="THEN" UId="132" />
+  <NewLine Num="1" UId="133" />
+  <Blank Num="4" UId="134" />
+  <Access Scope="LocalVariable" UId="135">
+    <Symbol UId="136">
+      <Component Name="ElementoIzquierda" UId="137" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="138" />
+  <Token Text=":=" UId="139" />
+  <Blank Num="1" UId="140" />
+  <Access Scope="LiteralConstant" UId="141">
+    <Constant UId="142">
+      <ConstantValue UId="144">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="145" />
+  <NewLine Num="1" UId="146" />
+  <Token Text="ELSE" UId="147" />
+  <NewLine Num="1" UId="148" />
+  <Blank Num="4" UId="149" />
+  <Access Scope="LocalVariable" UId="150">
+    <Symbol UId="151">
+      <Component Name="ElementoIzquierda" UId="152" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="153" />
+  <Token Text=":=" UId="154" />
+  <Blank Num="1" UId="155" />
+  <Access Scope="LocalVariable" UId="156">
+    <Symbol UId="157">
+      <Component Name="Servos" UId="158">
+        <Token Text="[" UId="159" />
+        <Access Scope="LocalVariable" UId="160">
+          <Symbol UId="161">
+            <Component Name="i_enfocado" UId="162" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="163" />
+        <Token Text="-" UId="164" />
+        <Blank Num="1" UId="165" />
+        <Access Scope="LiteralConstant" UId="166">
+          <Constant UId="167">
+            <ConstantValue UId="169">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text="]" UId="170" />
+      </Component>
+      <Token Text="." UId="171" />
+      <Component Name="Actual_position" UId="172" />
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="173" />
+  <NewLine Num="1" UId="174" />
+  <Token Text="END_IF" UId="175" />
+  <Token Text=";" UId="176" />
+  <NewLine Num="2" UId="177" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="178">
+    <Text UId="179">Cabezales que tienen la derecha libre                                                                                                     ////////////</Text>
+  </LineComment>
+  <NewLine Num="1" UId="180" />
+  <Token Text="IF" UId="181" />
+  <Blank Num="1" UId="182" />
+  <Access Scope="LocalVariable" UId="183">
+    <Symbol UId="184">
+      <Component Name="i_enfocado" UId="185" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="186" />
+  <Token Text="=" UId="187" />
+  <Blank Num="1" UId="188" />
+  <Access Scope="LiteralConstant" UId="189">
+    <Constant UId="190">
+      <ConstantValue UId="192">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="193" />
+  <Token Text="OR" UId="194" />
+  <Blank Num="1" UId="195" />
+  <Access Scope="LocalVariable" UId="196">
+    <Symbol UId="197">
+      <Component Name="i_enfocado" UId="198" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="199" />
+  <Token Text="=" UId="200" />
+  <Blank Num="1" UId="201" />
+  <Access Scope="LiteralConstant" UId="202">
+    <Constant UId="203">
+      <ConstantValue UId="205">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="206" />
+  <Token Text="+" UId="207" />
+  <Blank Num="1" UId="208" />
+  <Access Scope="LiteralConstant" UId="209">
+    <Constant UId="210">
+      <ConstantValue UId="212">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="213" />
+  <Token Text="OR" UId="214" />
+  <Blank Num="1" UId="215" />
+  <Access Scope="LocalVariable" UId="216">
+    <Symbol UId="217">
+      <Component Name="i_enfocado" UId="218" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="219" />
+  <Token Text="=" UId="220" />
+  <Blank Num="1" UId="221" />
+  <Access Scope="LiteralConstant" UId="222">
+    <Constant UId="223">
+      <ConstantValue UId="225">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="226" />
+  <Token Text="+" UId="227" />
+  <Blank Num="1" UId="228" />
+  <Access Scope="LiteralConstant" UId="229">
+    <Constant UId="230">
+      <ConstantValue UId="232">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="233" />
+  <Token Text="+" UId="234" />
+  <Blank Num="1" UId="235" />
+  <Access Scope="LiteralConstant" UId="236">
+    <Constant UId="237">
+      <ConstantValue UId="239">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="240" />
+  <Token Text="OR" UId="241" />
+  <Blank Num="1" UId="242" />
+  <Access Scope="LocalVariable" UId="243">
+    <Symbol UId="244">
+      <Component Name="i_enfocado" UId="245" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="246" />
+  <Token Text="=" UId="247" />
+  <Blank Num="1" UId="248" />
+  <Access Scope="LiteralConstant" UId="249">
+    <Constant UId="250">
+      <ConstantValue UId="252">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="253" />
+  <Token Text="+" UId="254" />
+  <Blank Num="1" UId="255" />
+  <Access Scope="LiteralConstant" UId="256">
+    <Constant UId="257">
+      <ConstantValue UId="259">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="260" />
+  <Token Text="+" UId="261" />
+  <Blank Num="1" UId="262" />
+  <Access Scope="LiteralConstant" UId="263">
+    <Constant UId="264">
+      <ConstantValue UId="266">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="267" />
+  <Token Text="+" UId="268" />
+  <Blank Num="1" UId="269" />
+  <Access Scope="LiteralConstant" UId="270">
+    <Constant UId="271">
+      <ConstantValue UId="273">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="274" />
+  <Token Text="OR" UId="275" />
+  <Blank Num="1" UId="276" />
+  <Access Scope="LocalVariable" UId="277">
+    <Symbol UId="278">
+      <Component Name="i_enfocado" UId="279" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="280" />
+  <Token Text="=" UId="281" />
+  <Blank Num="1" UId="282" />
+  <Access Scope="LiteralConstant" UId="283">
+    <Constant UId="284">
+      <ConstantValue UId="286">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="287" />
+  <Token Text="+" UId="288" />
+  <Blank Num="1" UId="289" />
+  <Access Scope="LiteralConstant" UId="290">
+    <Constant UId="291">
+      <ConstantValue UId="293">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="294" />
+  <Token Text="+" UId="295" />
+  <Blank Num="1" UId="296" />
+  <Access Scope="LiteralConstant" UId="297">
+    <Constant UId="298">
+      <ConstantValue UId="300">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="301" />
+  <Token Text="+" UId="302" />
+  <Blank Num="1" UId="303" />
+  <Access Scope="LiteralConstant" UId="304">
+    <Constant UId="305">
+      <ConstantValue UId="307">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="308" />
+  <Token Text="+" UId="309" />
+  <Blank Num="1" UId="310" />
+  <Access Scope="LiteralConstant" UId="311">
+    <Constant UId="312">
+      <ConstantValue UId="314">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="315" />
+  <Token Text="OR" UId="316" />
+  <Blank Num="1" UId="317" />
+  <Access Scope="LocalVariable" UId="318">
+    <Symbol UId="319">
+      <Component Name="i_enfocado" UId="320" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="321" />
+  <Token Text="=" UId="322" />
+  <Blank Num="1" UId="323" />
+  <Access Scope="LiteralConstant" UId="324">
+    <Constant UId="325">
+      <ConstantValue UId="327">50</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="328" />
+  <Token Text="THEN" UId="329" />
+  <NewLine Num="1" UId="330" />
+  <Blank Num="4" UId="331" />
+  <Access Scope="LocalVariable" UId="332">
+    <Symbol UId="333">
+      <Component Name="ElementoDerecha" UId="334" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="335" />
+  <Token Text=":=" UId="336" />
+  <Blank Num="1" UId="337" />
+  <Access Scope="LocalConstant" UId="338">
+    <Constant Name="AnchoMaquina" UId="339" />
+  </Access>
+  <Token Text=";" UId="342" />
+  <NewLine Num="1" UId="343" />
+  <Token Text="ELSE" UId="344" />
+  <NewLine Num="1" UId="345" />
+  <Blank Num="4" UId="346" />
+  <Access Scope="LocalVariable" UId="347">
+    <Symbol UId="348">
+      <Component Name="ElementoDerecha" UId="349" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="350" />
+  <Token Text=":=" UId="351" />
+  <Blank Num="1" UId="352" />
+  <Access Scope="LocalVariable" UId="353">
+    <Symbol UId="354">
+      <Component Name="Servos" UId="355">
+        <Token Text="[" UId="356" />
+        <Access Scope="LocalVariable" UId="357">
+          <Symbol UId="358">
+            <Component Name="i_enfocado" UId="359" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="360" />
+        <Token Text="+" UId="361" />
+        <Blank Num="1" UId="362" />
+        <Access Scope="LiteralConstant" UId="363">
+          <Constant UId="364">
+            <ConstantValue UId="366">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text="]" UId="367" />
+      </Component>
+      <Token Text="." UId="368" />
+      <Component Name="Actual_position" UId="369" />
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="370" />
+  <NewLine Num="1" UId="371" />
+  <Token Text="END_IF" UId="372" />
+  <Token Text=";" UId="373" />
+  <NewLine Num="2" UId="374" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text />
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="6" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Posicion del elemento a la izquierda</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+  <Parts>
+    <Access Scope="LocalVariable" UId="21">
+      <Symbol>
+        <Component Name="Posicion" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="22">
+      <Symbol>
+        <Component Name="ElementoIzquierda" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="23">
+      <Symbol>
+        <Component Name="DeltaIzquierda" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="24">
+      <Symbol>
+        <Component Name="ElementoDerecha" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="25">
+      <Symbol>
+        <Component Name="Posicion" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="26">
+      <Symbol>
+        <Component Name="DeltaDerecha" />
+      </Symbol>
+    </Access>
+    <Part Name="Calc" UId="27" DisabledENO="true">
+      <Equation>ABS(IN1-IN2)</Equation>
+      <TemplateValue Name="Card" Type="Cardinality">2</TemplateValue>
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="Calc" UId="28" DisabledENO="true">
+      <Equation>ABS(IN1-IN2)</Equation>
+      <TemplateValue Name="Card" Type="Cardinality">2</TemplateValue>
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+  </Parts>
+  <Wires>
+    <Wire UId="29">
+      <Powerrail />
+      <NameCon UId="27" Name="en" />
+    </Wire>
+    <Wire UId="30">
+      <IdentCon UId="21" />
+      <NameCon UId="27" Name="in1" />
+    </Wire>
+    <Wire UId="31">
+      <IdentCon UId="22" />
+      <NameCon UId="27" Name="in2" />
+    </Wire>
+    <Wire UId="32">
+      <NameCon UId="27" Name="eno" />
+      <NameCon UId="28" Name="en" />
+    </Wire>
+    <Wire UId="33">
+      <NameCon UId="27" Name="out" />
+      <IdentCon UId="23" />
+    </Wire>
+    <Wire UId="34">
+      <IdentCon UId="24" />
+      <NameCon UId="28" Name="in1" />
+    </Wire>
+    <Wire UId="35">
+      <IdentCon UId="25" />
+      <NameCon UId="28" Name="in2" />
+    </Wire>
+    <Wire UId="36">
+      <NameCon UId="28" Name="out" />
+      <IdentCon UId="26" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Obtiene los diferenciales de distancia entre el elemento evaluado y el de la izquierda, y el elemento evaluado y el de la derecha</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="B" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Calculo de distancias entre los elementos</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="D" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+  <Parts>
+    <Access Scope="LocalConstant" UId="21">
+      <Constant Name="AnchoCabezal" />
+    </Access>
+    <Access Scope="LocalVariable" UId="22">
+      <Symbol>
+        <Component Name="DeltaIzquierda" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="23">
+      <Symbol>
+        <Component Name="ElementoIzquierda" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="24">
+      <Constant>
+        <ConstantType>Real</ConstantType>
+        <ConstantValue>0.0</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalConstant" UId="25">
+      <Constant Name="AnchoCabezal/2" />
+    </Access>
+    <Access Scope="LocalVariable" UId="26">
+      <Symbol>
+        <Component Name="DeltaIzquierda" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="27">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_enfocado" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="Actual_speed" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="28">
+      <Constant>
+        <ConstantType>LReal</ConstantType>
+        <ConstantValue>0.0</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalConstant" UId="29">
+      <Constant Name="AnchoCabezal" />
+    </Access>
+    <Access Scope="LocalVariable" UId="30">
+      <Symbol>
+        <Component Name="DeltaDerecha" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="31">
+      <Symbol>
+        <Component Name="ElementoDerecha" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalConstant" UId="32">
+      <Constant Name="AnchoMaquina" />
+    </Access>
+    <Access Scope="LocalConstant" UId="33">
+      <Constant Name="AnchoCabezal/2" />
+    </Access>
+    <Access Scope="LocalVariable" UId="34">
+      <Symbol>
+        <Component Name="DeltaDerecha" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="35">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_enfocado" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="Actual_speed" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="36">
+      <Constant>
+        <ConstantType>LReal</ConstantType>
+        <ConstantValue>0.0</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="37">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_enfocado" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="MC_standstill" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="38">
+      <Symbol>
+        <Component Name="Paro" />
+      </Symbol>
+    </Access>
+    <Part Name="Ge" UId="39">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="Ne" UId="40">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="Ge" UId="41">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="O" UId="42">
+      <TemplateValue Name="Card" Type="Cardinality">2</TemplateValue>
+    </Part>
+    <Part Name="Lt" UId="43">
+      <TemplateValue Name="SrcType" Type="Type">LReal</TemplateValue>
+    </Part>
+    <Part Name="Ge" UId="44">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="Ne" UId="45">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="Ge" UId="46">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="O" UId="47">
+      <TemplateValue Name="Card" Type="Cardinality">2</TemplateValue>
+    </Part>
+    <Part Name="Gt" UId="48">
+      <TemplateValue Name="SrcType" Type="Type">LReal</TemplateValue>
+    </Part>
+    <Part Name="O" UId="49">
+      <TemplateValue Name="Card" Type="Cardinality">2</TemplateValue>
+    </Part>
+    <Part Name="Contact" UId="50">
+      <Negated Name="operand" />
+    </Part>
+    <Part Name="Coil" UId="51" />
+  </Parts>
+  <Wires>
+    <Wire UId="52">
+      <Powerrail />
+      <NameCon UId="39" Name="pre" />
+      <NameCon UId="41" Name="pre" />
+      <NameCon UId="44" Name="pre" />
+      <NameCon UId="46" Name="pre" />
+    </Wire>
+    <Wire UId="53">
+      <IdentCon UId="21" />
+      <NameCon UId="39" Name="in1" />
+    </Wire>
+    <Wire UId="54">
+      <IdentCon UId="22" />
+      <NameCon UId="39" Name="in2" />
+    </Wire>
+    <Wire UId="55">
+      <NameCon UId="39" Name="out" />
+      <NameCon UId="40" Name="pre" />
+    </Wire>
+    <Wire UId="56">
+      <IdentCon UId="23" />
+      <NameCon UId="40" Name="in1" />
+    </Wire>
+    <Wire UId="57">
+      <IdentCon UId="24" />
+      <NameCon UId="40" Name="in2" />
+    </Wire>
+    <Wire UId="58">
+      <NameCon UId="40" Name="out" />
+      <NameCon UId="42" Name="in1" />
+    </Wire>
+    <Wire UId="59">
+      <IdentCon UId="25" />
+      <NameCon UId="41" Name="in1" />
+    </Wire>
+    <Wire UId="60">
+      <IdentCon UId="26" />
+      <NameCon UId="41" Name="in2" />
+    </Wire>
+    <Wire UId="61">
+      <NameCon UId="41" Name="out" />
+      <NameCon UId="42" Name="in2" />
+    </Wire>
+    <Wire UId="62">
+      <NameCon UId="42" Name="out" />
+      <NameCon UId="43" Name="pre" />
+    </Wire>
+    <Wire UId="63">
+      <IdentCon UId="27" />
+      <NameCon UId="43" Name="in1" />
+    </Wire>
+    <Wire UId="64">
+      <IdentCon UId="28" />
+      <NameCon UId="43" Name="in2" />
+    </Wire>
+    <Wire UId="65">
+      <NameCon UId="43" Name="out" />
+      <NameCon UId="49" Name="in1" />
+    </Wire>
+    <Wire UId="66">
+      <IdentCon UId="29" />
+      <NameCon UId="44" Name="in1" />
+    </Wire>
+    <Wire UId="67">
+      <IdentCon UId="30" />
+      <NameCon UId="44" Name="in2" />
+    </Wire>
+    <Wire UId="68">
+      <NameCon UId="44" Name="out" />
+      <NameCon UId="45" Name="pre" />
+    </Wire>
+    <Wire UId="69">
+      <IdentCon UId="31" />
+      <NameCon UId="45" Name="in1" />
+    </Wire>
+    <Wire UId="70">
+      <IdentCon UId="32" />
+      <NameCon UId="45" Name="in2" />
+    </Wire>
+    <Wire UId="71">
+      <NameCon UId="45" Name="out" />
+      <NameCon UId="47" Name="in1" />
+    </Wire>
+    <Wire UId="72">
+      <IdentCon UId="33" />
+      <NameCon UId="46" Name="in1" />
+    </Wire>
+    <Wire UId="73">
+      <IdentCon UId="34" />
+      <NameCon UId="46" Name="in2" />
+    </Wire>
+    <Wire UId="74">
+      <NameCon UId="46" Name="out" />
+      <NameCon UId="47" Name="in2" />
+    </Wire>
+    <Wire UId="75">
+      <NameCon UId="47" Name="out" />
+      <NameCon UId="48" Name="pre" />
+    </Wire>
+    <Wire UId="76">
+      <IdentCon UId="35" />
+      <NameCon UId="48" Name="in1" />
+    </Wire>
+    <Wire UId="77">
+      <IdentCon UId="36" />
+      <NameCon UId="48" Name="in2" />
+    </Wire>
+    <Wire UId="78">
+      <NameCon UId="48" Name="out" />
+      <NameCon UId="49" Name="in2" />
+    </Wire>
+    <Wire UId="79">
+      <NameCon UId="49" Name="out" />
+      <NameCon UId="50" Name="in" />
+    </Wire>
+    <Wire UId="80">
+      <IdentCon UId="37" />
+      <NameCon UId="50" Name="operand" />
+    </Wire>
+    <Wire UId="81">
+      <NameCon UId="50" Name="out" />
+      <NameCon UId="51" Name="in" />
+    </Wire>
+    <Wire UId="82">
+      <IdentCon UId="38" />
+      <NameCon UId="51" Name="operand" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Si el elemento evaluado se esta moviendo a la izquierda y esta demasiado cerca de la izquierda paro se activa
+
+Si el elemento evaluado se esta moviendo a la derecha y esta demasiado cerca paro derecha se activa
+
+El paro se enclava cuando se queda quieto si sigue a una distancia peligrosa para esto se usa #ParoIzq y #ParoDer como InOut, sino se pueden cambiar a Out o Temp</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="10" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="11" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Señales de paro por direcciones</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="12" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="13" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>Celula de calculo de colision de un elemento movil entre otros dos</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.FC>
+</Document>

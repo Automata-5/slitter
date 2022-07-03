@@ -1,0 +1,1609 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V16" />
+  <DocumentInfo>
+    <Created>2022-07-03T01:19:42.5442291Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Blocks.FC ID="0">
+    <AttributeList>
+      <AutoNumber>true</AutoNumber>
+      <HeaderAuthor />
+      <HeaderFamily />
+      <HeaderName />
+      <HeaderVersion>0.1</HeaderVersion>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
+  <Section Name="Input">
+    <Member Name="AnchoLamina" Datatype="Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Ancho en mm de la lamina de carton de entrada</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="NPinf" Datatype="Int" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Numero de pliegos inferior</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="NPsup" Datatype="Int" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Numero de pliegos superior</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="AnchoInf" Datatype="Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Ancho de los pliegos inferior en mm</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="AnchoSup" Datatype="Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Ancho de los pliegos superior en mm</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="InvertirOrden" Datatype="Bool" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Si es verdadero cambia el orden de Superior/Inferior a Inferior/Superior</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+  <Section Name="Output">
+    <Member Name="PosicionesSalidas" Datatype="Array[0..6] of Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Posiciones necesarias para lograr los cortes introducidos</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+  <Section Name="InOut" />
+  <Section Name="Temp">
+    <Member Name="Posiciones" Datatype="Array[0..6] of Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Lista de las posiciones de los slithers</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="NumeroPliegos" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Sumatoria del numero de pliegos</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="SumAnchoPliegos" Datatype="Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Sumatoria de los anchos de los pliegos Superiores e Inferiores</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="i" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Variable para iterar</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="j" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Variable para iterar</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="Xref" Datatype="Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Diferencial del punto izquierdo de la maquina al punto izquiero de la lamina de entrada</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+  <Section Name="Constant">
+    <Member Name="CuchillaConsume" Datatype="Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Ancho que consumen las cuchillas al cortar (mm)</MultiLanguageText>
+      </Comment>
+      <StartValue>1.0</StartValue>
+    </Member>
+    <Member Name="CapacidadGargantas" Datatype="Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Ancho maximo del sobrante que las gargantas pueden tomar (mm)</MultiLanguageText>
+      </Comment>
+      <StartValue>200.0</StartValue>
+    </Member>
+    <Member Name="AnchoMaquina" Datatype="Real" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Ancho total operativo de la maquina (mm)</MultiLanguageText>
+      </Comment>
+      <StartValue>3000.0</StartValue>
+    </Member>
+  </Section>
+  <Section Name="Return">
+    <Member Name="Ret_Val" Datatype="String" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Mensaje de error</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+</Sections></Interface>
+      <IsIECCheckEnabled>false</IsIECCheckEnabled>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <Name>PosicionarSlitters</Name>
+      <Number>1</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SetENOAutomatically>false</SetENOAutomatically>
+      <UDABlockProperties />
+      <UDAEnableTagReadback>false</UDAEnableTagReadback>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>Asignar valores correctos a las constantes CuchillaConsume, CapacidadGargantas y AnchoMaquina</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+  <Parts>
+    <Access Scope="LocalVariable" UId="21">
+      <Symbol>
+        <Component Name="AnchoLamina" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalConstant" UId="22">
+      <Constant Name="AnchoMaquina" />
+    </Access>
+    <Access Scope="LiteralConstant" UId="23">
+      <Constant>
+        <ConstantType>String</ConstantType>
+        <ConstantValue>'La laminade entrada no cabe en la maquina'</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="24">
+      <Symbol>
+        <Component Name="PosicionarSlitters" />
+      </Symbol>
+    </Access>
+    <Part Name="Gt" UId="25">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="S_Move" UId="26" DisabledENO="true" />
+    <Part Name="Return" UId="27" />
+  </Parts>
+  <Wires>
+    <Wire UId="28">
+      <Powerrail />
+      <NameCon UId="25" Name="pre" />
+    </Wire>
+    <Wire UId="29">
+      <IdentCon UId="21" />
+      <NameCon UId="25" Name="in1" />
+    </Wire>
+    <Wire UId="30">
+      <IdentCon UId="22" />
+      <NameCon UId="25" Name="in2" />
+    </Wire>
+    <Wire UId="31">
+      <NameCon UId="25" Name="out" />
+      <NameCon UId="26" Name="en" />
+    </Wire>
+    <Wire UId="32">
+      <IdentCon UId="23" />
+      <NameCon UId="26" Name="in" />
+    </Wire>
+    <Wire UId="33">
+      <NameCon UId="26" Name="eno" />
+      <NameCon UId="27" Name="in" />
+    </Wire>
+    <Wire UId="34">
+      <NameCon UId="26" Name="out" />
+      <IdentCon UId="24" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Valida si la lamina cabe en la maquina, si no, envia un mensaje y retorna la funcion</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="6" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Verificar si la lamina cabe en la maquina</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+  <Parts>
+    <Access Scope="LocalVariable" UId="21">
+      <Symbol>
+        <Component Name="NPinf" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="22">
+      <Symbol>
+        <Component Name="NPsup" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="23">
+      <Symbol>
+        <Component Name="NumeroPliegos" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="24">
+      <Symbol>
+        <Component Name="NumeroPliegos" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="25">
+      <Constant>
+        <ConstantType>Int</ConstantType>
+        <ConstantValue>6</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LiteralConstant" UId="26">
+      <Constant>
+        <ConstantType>String</ConstantType>
+        <ConstantValue>'No hay cuchillas suficientes (Maximo 6 pliegos)'</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="27">
+      <Symbol>
+        <Component Name="PosicionarSlitters" />
+      </Symbol>
+    </Access>
+    <Part Name="Calc" UId="28" DisabledENO="true">
+      <Equation>IN1 + IN2</Equation>
+      <TemplateValue Name="Card" Type="Cardinality">2</TemplateValue>
+      <TemplateValue Name="SrcType" Type="Type">Int</TemplateValue>
+    </Part>
+    <Part Name="Gt" UId="29">
+      <TemplateValue Name="SrcType" Type="Type">Int</TemplateValue>
+    </Part>
+    <Part Name="S_Move" UId="30" DisabledENO="true" />
+    <Part Name="Return" UId="31" />
+  </Parts>
+  <Wires>
+    <Wire UId="32">
+      <Powerrail />
+      <NameCon UId="28" Name="en" />
+      <NameCon UId="29" Name="pre" />
+    </Wire>
+    <Wire UId="33">
+      <IdentCon UId="21" />
+      <NameCon UId="28" Name="in1" />
+    </Wire>
+    <Wire UId="34">
+      <IdentCon UId="22" />
+      <NameCon UId="28" Name="in2" />
+    </Wire>
+    <Wire UId="35">
+      <NameCon UId="28" Name="out" />
+      <IdentCon UId="23" />
+    </Wire>
+    <Wire UId="36">
+      <IdentCon UId="24" />
+      <NameCon UId="29" Name="in1" />
+    </Wire>
+    <Wire UId="37">
+      <IdentCon UId="25" />
+      <NameCon UId="29" Name="in2" />
+    </Wire>
+    <Wire UId="38">
+      <NameCon UId="29" Name="out" />
+      <NameCon UId="30" Name="en" />
+    </Wire>
+    <Wire UId="39">
+      <IdentCon UId="26" />
+      <NameCon UId="30" Name="in" />
+    </Wire>
+    <Wire UId="40">
+      <NameCon UId="30" Name="eno" />
+      <NameCon UId="31" Name="in" />
+    </Wire>
+    <Wire UId="41">
+      <NameCon UId="30" Name="out" />
+      <IdentCon UId="27" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Se sabe que la maquina de cortado solo posee 7 cortadores por lo que el numero maximo de pliegos de salida son 6.
+Se suman los numeros de pliegos deseados y se compara si son mayores a 6, si es asi envia un mensaje de error e interrumpe la funcion.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="B" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Verificar si hay suficientes cortadores para cortar los pliegos</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="D" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+  <Parts>
+    <Access Scope="LocalVariable" UId="21">
+      <Symbol>
+        <Component Name="NPinf" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="22">
+      <Symbol>
+        <Component Name="AnchoInf" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="23">
+      <Symbol>
+        <Component Name="NPsup" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="24">
+      <Symbol>
+        <Component Name="AnchoSup" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="25">
+      <Symbol>
+        <Component Name="NumeroPliegos" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="26">
+      <Constant>
+        <ConstantType>Int</ConstantType>
+        <ConstantValue>1</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalConstant" UId="27">
+      <Constant Name="CuchillaConsume" />
+    </Access>
+    <Access Scope="LocalVariable" UId="28">
+      <Symbol>
+        <Component Name="SumAnchoPliegos" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="29">
+      <Symbol>
+        <Component Name="SumAnchoPliegos" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="30">
+      <Symbol>
+        <Component Name="AnchoLamina" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="31">
+      <Constant>
+        <ConstantType>String</ConstantType>
+        <ConstantValue>'La lamina de entrada no es lo suficientemente ancha para satisfacer las salidas'</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="32">
+      <Symbol>
+        <Component Name="PosicionarSlitters" />
+      </Symbol>
+    </Access>
+    <Part Name="Calc" UId="33" DisabledENO="true">
+      <Equation>IN1 * IN2 + IN3 * IN4 + (IN5 + IN6 ) * IN7</Equation>
+      <TemplateValue Name="Card" Type="Cardinality">7</TemplateValue>
+      <TemplateValue Name="SrcType" Type="Type">Int</TemplateValue>
+    </Part>
+    <Part Name="Ge" UId="34">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="S_Move" UId="35" DisabledENO="true" />
+    <Part Name="Return" UId="36" />
+  </Parts>
+  <Wires>
+    <Wire UId="37">
+      <Powerrail />
+      <NameCon UId="33" Name="en" />
+      <NameCon UId="34" Name="pre" />
+    </Wire>
+    <Wire UId="38">
+      <IdentCon UId="21" />
+      <NameCon UId="33" Name="in1" />
+    </Wire>
+    <Wire UId="39">
+      <IdentCon UId="22" />
+      <NameCon UId="33" Name="in2" />
+    </Wire>
+    <Wire UId="40">
+      <IdentCon UId="23" />
+      <NameCon UId="33" Name="in3" />
+    </Wire>
+    <Wire UId="41">
+      <IdentCon UId="24" />
+      <NameCon UId="33" Name="in4" />
+    </Wire>
+    <Wire UId="42">
+      <IdentCon UId="25" />
+      <NameCon UId="33" Name="in5" />
+    </Wire>
+    <Wire UId="43">
+      <IdentCon UId="26" />
+      <NameCon UId="33" Name="in6" />
+    </Wire>
+    <Wire UId="44">
+      <IdentCon UId="27" />
+      <NameCon UId="33" Name="in7" />
+    </Wire>
+    <Wire UId="45">
+      <NameCon UId="33" Name="out" />
+      <IdentCon UId="28" />
+    </Wire>
+    <Wire UId="46">
+      <IdentCon UId="29" />
+      <NameCon UId="34" Name="in1" />
+    </Wire>
+    <Wire UId="47">
+      <IdentCon UId="30" />
+      <NameCon UId="34" Name="in2" />
+    </Wire>
+    <Wire UId="48">
+      <NameCon UId="34" Name="out" />
+      <NameCon UId="35" Name="en" />
+    </Wire>
+    <Wire UId="49">
+      <IdentCon UId="31" />
+      <NameCon UId="35" Name="in" />
+    </Wire>
+    <Wire UId="50">
+      <NameCon UId="35" Name="eno" />
+      <NameCon UId="36" Name="in" />
+    </Wire>
+    <Wire UId="51">
+      <NameCon UId="35" Name="out" />
+      <IdentCon UId="32" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="E" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="F" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Con base en el numero de pliegos, el ancho deseado ademas de lo que se consumirá en las cuchillas se obtinene el ancho total de lamina de entrada minimo necesario para satisfacer la salida
+Se compara ese ancho calculado con el de entrada, e interrumpe la funcion en caso de que no sea suficiente enviando el mensaje de error.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="10" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="11" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Verificar que el ancho total de los pliegos no superen al de entrada</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="12" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <LineComment Inserted="false" NoClosingBracket="false" UId="21">
+    <Text UId="22">Esta región posiciona al primer slitter, el que esta mas a la izquierda, con base en esto</Text>
+  </LineComment>
+  <NewLine Num="1" UId="23" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="24">
+    <Text UId="25">Centra la zona util de los pliegos para que quede un sobrante igual a ambos extremos de la lamina</Text>
+  </LineComment>
+  <NewLine Num="2" UId="26" />
+  <Token Text="REGION" UId="27" />
+  <Blank Num="1" UId="28" />
+  <Text UId="29">Primer cortador</Text>
+  <NewLine Num="1" UId="30" />
+  <Blank Num="4" UId="31" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="32">
+    <Text UId="33">Se resta el ancho de las laminas deseadas al ancho total de la lamina para obtener el sobrante total</Text>
+  </LineComment>
+  <NewLine Num="1" UId="34" />
+  <Blank Num="4" UId="35" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="36">
+    <Text UId="37">Posteriormente se divide entre dos para tener dos partes iguales</Text>
+  </LineComment>
+  <NewLine Num="1" UId="38" />
+  <Blank Num="4" UId="39" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="40">
+    <Text UId="41">A esa cantidad se le suma la mitad de lo que consume una cuchilla pues esta afecta la mitad al pliego a su izquierda y la mitad a su derecha</Text>
+  </LineComment>
+  <NewLine Num="1" UId="42" />
+  <Blank Num="4" UId="43" />
+  <Access Scope="LocalVariable" UId="44">
+    <Symbol UId="45">
+      <Component Name="Posiciones" UId="46">
+        <Token Text="[" UId="47" />
+        <Access Scope="LiteralConstant" UId="48">
+          <Constant UId="49">
+            <ConstantValue UId="51">0</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text="]" UId="52" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="53" />
+  <Token Text=":=" UId="54" />
+  <Blank Num="1" UId="55" />
+  <Token Text="(" UId="56" />
+  <Access Scope="LocalVariable" UId="57">
+    <Symbol UId="58">
+      <Component Name="AnchoLamina" UId="59" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="60" />
+  <Token Text="-" UId="61" />
+  <Blank Num="1" UId="62" />
+  <Access Scope="LocalVariable" UId="63">
+    <Symbol UId="64">
+      <Component Name="SumAnchoPliegos" UId="65" />
+    </Symbol>
+  </Access>
+  <Token Text=")" UId="66" />
+  <Blank Num="1" UId="67" />
+  <Token Text="/" UId="68" />
+  <Blank Num="1" UId="69" />
+  <Access Scope="LiteralConstant" UId="70">
+    <Constant UId="71">
+      <ConstantValue UId="73">2</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="74" />
+  <Token Text="+" UId="75" />
+  <Blank Num="1" UId="76" />
+  <Access Scope="LocalConstant" UId="77">
+    <Constant Name="CuchillaConsume" UId="78" />
+  </Access>
+  <Token Text="/" UId="81" />
+  <Access Scope="LiteralConstant" UId="82">
+    <Constant UId="83">
+      <ConstantValue UId="85">2</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="86" />
+  <NewLine Num="1" UId="87" />
+  <Blank Num="4" UId="88" />
+  <NewLine Num="1" UId="89" />
+  <Blank Num="4" UId="90" />
+  <NewLine Num="1" UId="91" />
+  <Token Text="END_REGION" UId="92" />
+  <NewLine Num="3" UId="93" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="94">
+    <Text UId="95">Esta region valida si las gargantas podran tomar el ancho del sobrante</Text>
+  </LineComment>
+  <NewLine Num="2" UId="96" />
+  <Token Text="REGION" UId="97" />
+  <Blank Num="1" UId="98" />
+  <Text UId="99">Verificar que el sobrante no superea al diametro de las gargantas     </Text>
+  <NewLine Num="1" UId="100" />
+  <Blank Num="4" UId="101" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="102">
+    <Text UId="103">Como el punto de referencia de estas posiciones es el extremo izquierdo de la lamina de entrada</Text>
+  </LineComment>
+  <NewLine Num="1" UId="104" />
+  <Blank Num="4" UId="105" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="106">
+    <Text UId="107">La posicion del primer slitter es igual al sobrante de la izquierda, y el sobrante de la derecha es igual al de la derecha</Text>
+  </LineComment>
+  <NewLine Num="1" UId="108" />
+  <Blank Num="4" UId="109" />
+  <Token Text="IF" UId="110" />
+  <Blank Num="1" UId="111" />
+  <Access Scope="LocalVariable" UId="112">
+    <Symbol UId="113">
+      <Component Name="Posiciones" UId="114">
+        <Token Text="[" UId="115" />
+        <Access Scope="LiteralConstant" UId="116">
+          <Constant UId="117">
+            <ConstantValue UId="119">0</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text="]" UId="120" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="121" />
+  <Token Text="&gt;=" UId="122" />
+  <Blank Num="1" UId="123" />
+  <Access Scope="LocalConstant" UId="124">
+    <Constant Name="CapacidadGargantas" UId="125" />
+  </Access>
+  <Blank Num="1" UId="128" />
+  <Token Text="THEN" UId="129" />
+  <NewLine Num="1" UId="130" />
+  <Blank Num="8" UId="131" />
+  <NewLine Num="1" UId="132" />
+  <Blank Num="8" UId="133" />
+  <Access Scope="LocalVariable" UId="134">
+    <Symbol UId="135">
+      <Component Name="PosicionarSlitters" UId="136" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="137" />
+  <Token Text=":=" UId="138" />
+  <Blank Num="1" UId="139" />
+  <Access Scope="LiteralConstant" UId="140">
+    <Constant UId="141">
+      <ConstantValue UId="143">'El sobrante no cabra por las gargantas'</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="144" />
+  <Blank Num="1" UId="145" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="146">
+    <Text UId="147">Si el sobrante es mayor a lo que las gargantas pueden </Text>
+  </LineComment>
+  <NewLine Num="1" UId="148" />
+  <Blank Num="8" UId="149" />
+  <Token Text="RETURN" UId="150" />
+  <Token Text=";" UId="151" />
+  <Blank Num="58" UId="152" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="153">
+    <Text UId="154">Envia un mensaje de error e interrupe la funcion</Text>
+  </LineComment>
+  <NewLine Num="1" UId="155" />
+  <Blank Num="8" UId="156" />
+  <NewLine Num="1" UId="157" />
+  <Blank Num="4" UId="158" />
+  <Token Text="END_IF" UId="159" />
+  <Token Text=";" UId="160" />
+  <NewLine Num="1" UId="161" />
+  <Token Text="END_REGION" UId="162" />
+  <NewLine Num="2" UId="163" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="164">
+    <Text UId="165">Esta region posiciona los slitters que quedan, lo que hace es poner al siguiente slitter</Text>
+  </LineComment>
+  <NewLine Num="1" UId="166" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="167">
+    <Text UId="168">a una distancia ANCHO PLIEGO del anterior y le suma lo que consume una cuchilla hasta terminar con los pliegos</Text>
+  </LineComment>
+  <NewLine Num="2" UId="169" />
+  <Token Text="REGION" UId="170" />
+  <Blank Num="1" UId="171" />
+  <Text UId="172">Siguientes cortadores</Text>
+  <NewLine Num="1" UId="173" />
+  <Blank Num="4" UId="174" />
+  <NewLine Num="1" UId="175" />
+  <Blank Num="4" UId="176" />
+  <Access Scope="LocalVariable" UId="177">
+    <Symbol UId="178">
+      <Component Name="j" UId="179" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="180" />
+  <Token Text=":=" UId="181" />
+  <Blank Num="1" UId="182" />
+  <Access Scope="LiteralConstant" UId="183">
+    <Constant UId="184">
+      <ConstantValue UId="186">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="187" />
+  <Blank Num="1" UId="188" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="189">
+    <Text UId="190">Inicializar iterador para el array y comenzar desde la izquierda comienza en 1 porque ya se asignó el 0</Text>
+  </LineComment>
+  <NewLine Num="1" UId="191" />
+  <Blank Num="4" UId="192" />
+  <NewLine Num="1" UId="193" />
+  <Blank Num="4" UId="194" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="195">
+    <Text UId="196">Define si primero se posicionan los superiores o los inferiores</Text>
+  </LineComment>
+  <NewLine Num="1" UId="197" />
+  <Blank Num="4" UId="198" />
+  <Token Text="IF" UId="199" />
+  <Blank Num="1" UId="200" />
+  <Access Scope="LocalVariable" UId="201">
+    <Symbol UId="202">
+      <Component Name="InvertirOrden" UId="203" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="204" />
+  <Token Text="=" UId="205" />
+  <Blank Num="1" UId="206" />
+  <Access Scope="LiteralConstant" UId="207">
+    <Constant UId="208">
+      <ConstantValue UId="210">TRUE</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="211" />
+  <Token Text="THEN" UId="212" />
+  <Blank Num="7" UId="213" />
+  <NewLine Num="1" UId="214" />
+  <Blank Num="8" UId="215" />
+  <NewLine Num="1" UId="216" />
+  <Blank Num="8" UId="217" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="218">
+    <Text UId="219">Inferiores a la izquierda, superiores a la derecha</Text>
+  </LineComment>
+  <NewLine Num="1" UId="220" />
+  <Blank Num="8" UId="221" />
+  <Token Text="REGION" UId="222" />
+  <Blank Num="1" UId="223" />
+  <Text UId="224">Pliegos InferioresSuperiores                </Text>
+  <NewLine Num="1" UId="225" />
+  <Blank Num="12" UId="226" />
+  <NewLine Num="1" UId="227" />
+  <Blank Num="12" UId="228" />
+  <Token Text="FOR" UId="229" />
+  <Blank Num="1" UId="230" />
+  <Access Scope="LocalVariable" UId="231">
+    <Symbol UId="232">
+      <Component Name="i" UId="233" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="234" />
+  <Token Text=":=" UId="235" />
+  <Blank Num="1" UId="236" />
+  <Token Text="-" UId="237" />
+  <Blank Num="1" UId="238" />
+  <Access Scope="LocalVariable" UId="239">
+    <Symbol UId="240">
+      <Component Name="NPinf" UId="241" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="242" />
+  <Token Text="TO" UId="243" />
+  <Blank Num="1" UId="244" />
+  <Access Scope="LiteralConstant" UId="245">
+    <Constant UId="246">
+      <ConstantValue UId="248">-1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="249" />
+  <Token Text="DO" UId="250" />
+  <Blank Num="2" UId="251" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="252">
+    <Text UId="253">Ciclo de los slitters inferiores</Text>
+  </LineComment>
+  <NewLine Num="1" UId="254" />
+  <Blank Num="16" UId="255" />
+  <NewLine Num="1" UId="256" />
+  <Blank Num="16" UId="257" />
+  <Access Scope="LocalVariable" UId="258">
+    <Symbol UId="259">
+      <Component Name="Posiciones" UId="260">
+        <Token Text="[" UId="261" />
+        <Access Scope="LocalVariable" UId="262">
+          <Symbol UId="263">
+            <Component Name="j" UId="264" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="265" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="266" />
+  <Token Text=":=" UId="267" />
+  <Blank Num="1" UId="268" />
+  <Access Scope="LocalVariable" UId="269">
+    <Symbol UId="270">
+      <Component Name="Posiciones" UId="271">
+        <Token Text="[" UId="272" />
+        <Access Scope="LocalVariable" UId="273">
+          <Symbol UId="274">
+            <Component Name="j" UId="275" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="276" />
+        <Token Text="-" UId="277" />
+        <Blank Num="1" UId="278" />
+        <Access Scope="LiteralConstant" UId="279">
+          <Constant UId="280">
+            <ConstantValue UId="282">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text="]" UId="283" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="284" />
+  <Token Text="+" UId="285" />
+  <Blank Num="1" UId="286" />
+  <Access Scope="LocalVariable" UId="287">
+    <Symbol UId="288">
+      <Component Name="AnchoInf" UId="289" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="290" />
+  <Token Text="+" UId="291" />
+  <Blank Num="1" UId="292" />
+  <Access Scope="LocalConstant" UId="293">
+    <Constant Name="CuchillaConsume" UId="294" />
+  </Access>
+  <Token Text=";" UId="297" />
+  <Blank Num="2" UId="298" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="299">
+    <Text UId="300">Posiciona al siguiente cortador a #AnchoInf del anterior</Text>
+  </LineComment>
+  <NewLine Num="1" UId="301" />
+  <Blank Num="16" UId="302" />
+  <Access Scope="LocalVariable" UId="303">
+    <Symbol UId="304">
+      <Component Name="j" UId="305" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="306" />
+  <Token Text=":=" UId="307" />
+  <Blank Num="1" UId="308" />
+  <Access Scope="LocalVariable" UId="309">
+    <Symbol UId="310">
+      <Component Name="j" UId="311" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="312" />
+  <Token Text="+" UId="313" />
+  <Blank Num="1" UId="314" />
+  <Access Scope="LiteralConstant" UId="315">
+    <Constant UId="316">
+      <ConstantValue UId="318">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="319" />
+  <Blank Num="40" UId="320" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="321">
+    <Text UId="322">Siguiente cortador</Text>
+  </LineComment>
+  <NewLine Num="1" UId="323" />
+  <Blank Num="16" UId="324" />
+  <NewLine Num="1" UId="325" />
+  <Blank Num="12" UId="326" />
+  <Token Text="END_FOR" UId="327" />
+  <Token Text=";" UId="328" />
+  <NewLine Num="1" UId="329" />
+  <Blank Num="12" UId="330" />
+  <NewLine Num="1" UId="331" />
+  <Blank Num="12" UId="332" />
+  <Token Text="FOR" UId="333" />
+  <Blank Num="1" UId="334" />
+  <Access Scope="LocalVariable" UId="335">
+    <Symbol UId="336">
+      <Component Name="i" UId="337" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="338" />
+  <Token Text=":=" UId="339" />
+  <Blank Num="1" UId="340" />
+  <Token Text="-" UId="341" />
+  <Blank Num="1" UId="342" />
+  <Access Scope="LocalVariable" UId="343">
+    <Symbol UId="344">
+      <Component Name="NPsup" UId="345" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="346" />
+  <Token Text="TO" UId="347" />
+  <Blank Num="1" UId="348" />
+  <Access Scope="LiteralConstant" UId="349">
+    <Constant UId="350">
+      <ConstantValue UId="352">-1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="353" />
+  <Token Text="DO" UId="354" />
+  <Blank Num="2" UId="355" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="356">
+    <Text UId="357">Ciclo de los slitters superiores</Text>
+  </LineComment>
+  <NewLine Num="1" UId="358" />
+  <Blank Num="16" UId="359" />
+  <NewLine Num="1" UId="360" />
+  <Blank Num="16" UId="361" />
+  <Access Scope="LocalVariable" UId="362">
+    <Symbol UId="363">
+      <Component Name="Posiciones" UId="364">
+        <Token Text="[" UId="365" />
+        <Access Scope="LocalVariable" UId="366">
+          <Symbol UId="367">
+            <Component Name="j" UId="368" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="369" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="370" />
+  <Token Text=":=" UId="371" />
+  <Blank Num="1" UId="372" />
+  <Access Scope="LocalVariable" UId="373">
+    <Symbol UId="374">
+      <Component Name="Posiciones" UId="375">
+        <Token Text="[" UId="376" />
+        <Access Scope="LocalVariable" UId="377">
+          <Symbol UId="378">
+            <Component Name="j" UId="379" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="380" />
+        <Token Text="-" UId="381" />
+        <Blank Num="1" UId="382" />
+        <Access Scope="LiteralConstant" UId="383">
+          <Constant UId="384">
+            <ConstantValue UId="386">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text="]" UId="387" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="388" />
+  <Token Text="+" UId="389" />
+  <Blank Num="1" UId="390" />
+  <Access Scope="LocalVariable" UId="391">
+    <Symbol UId="392">
+      <Component Name="AnchoSup" UId="393" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="394" />
+  <Token Text="+" UId="395" />
+  <Blank Num="1" UId="396" />
+  <Access Scope="LocalConstant" UId="397">
+    <Constant Name="CuchillaConsume" UId="398" />
+  </Access>
+  <Token Text=";" UId="401" />
+  <Blank Num="2" UId="402" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="403">
+    <Text UId="404">Posiciona al siguiente cortador a #AnchoInf del anterior</Text>
+  </LineComment>
+  <NewLine Num="1" UId="405" />
+  <Blank Num="16" UId="406" />
+  <Access Scope="LocalVariable" UId="407">
+    <Symbol UId="408">
+      <Component Name="j" UId="409" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="410" />
+  <Token Text=":=" UId="411" />
+  <Blank Num="1" UId="412" />
+  <Access Scope="LocalVariable" UId="413">
+    <Symbol UId="414">
+      <Component Name="j" UId="415" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="416" />
+  <Token Text="+" UId="417" />
+  <Blank Num="1" UId="418" />
+  <Access Scope="LiteralConstant" UId="419">
+    <Constant UId="420">
+      <ConstantValue UId="422">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="423" />
+  <Blank Num="40" UId="424" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="425">
+    <Text UId="426">Siguiente cortador</Text>
+  </LineComment>
+  <NewLine Num="1" UId="427" />
+  <Blank Num="16" UId="428" />
+  <NewLine Num="1" UId="429" />
+  <Blank Num="12" UId="430" />
+  <Token Text="END_FOR" UId="431" />
+  <Token Text=";" UId="432" />
+  <NewLine Num="1" UId="433" />
+  <Blank Num="8" UId="434" />
+  <Token Text="END_REGION" UId="435" />
+  <NewLine Num="1" UId="436" />
+  <Blank Num="8" UId="437" />
+  <NewLine Num="1" UId="438" />
+  <Blank Num="8" UId="439" />
+  <NewLine Num="1" UId="440" />
+  <Blank Num="4" UId="441" />
+  <Token Text="ELSE" UId="442" />
+  <NewLine Num="1" UId="443" />
+  <Blank Num="8" UId="444" />
+  <NewLine Num="1" UId="445" />
+  <Blank Num="8" UId="446" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="447">
+    <Text UId="448">Superiores a la izquierda, inferiores a la derecha</Text>
+  </LineComment>
+  <NewLine Num="1" UId="449" />
+  <Blank Num="8" UId="450" />
+  <Token Text="REGION" UId="451" />
+  <Blank Num="1" UId="452" />
+  <Text UId="453">Pliegos SuperioresInferiores</Text>
+  <NewLine Num="1" UId="454" />
+  <Blank Num="12" UId="455" />
+  <Token Text="FOR" UId="456" />
+  <Blank Num="1" UId="457" />
+  <Access Scope="LocalVariable" UId="458">
+    <Symbol UId="459">
+      <Component Name="i" UId="460" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="461" />
+  <Token Text=":=" UId="462" />
+  <Blank Num="1" UId="463" />
+  <Token Text="-" UId="464" />
+  <Blank Num="1" UId="465" />
+  <Access Scope="LocalVariable" UId="466">
+    <Symbol UId="467">
+      <Component Name="NPsup" UId="468" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="469" />
+  <Token Text="TO" UId="470" />
+  <Blank Num="1" UId="471" />
+  <Access Scope="LiteralConstant" UId="472">
+    <Constant UId="473">
+      <ConstantValue UId="475">-1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="476" />
+  <Token Text="DO" UId="477" />
+  <Blank Num="3" UId="478" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="479">
+    <Text UId="480">Ciclo de los slitters superiores</Text>
+  </LineComment>
+  <NewLine Num="1" UId="481" />
+  <Blank Num="16" UId="482" />
+  <NewLine Num="1" UId="483" />
+  <Blank Num="16" UId="484" />
+  <Access Scope="LocalVariable" UId="485">
+    <Symbol UId="486">
+      <Component Name="Posiciones" UId="487">
+        <Token Text="[" UId="488" />
+        <Access Scope="LocalVariable" UId="489">
+          <Symbol UId="490">
+            <Component Name="j" UId="491" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="492" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="493" />
+  <Token Text=":=" UId="494" />
+  <Blank Num="1" UId="495" />
+  <Access Scope="LocalVariable" UId="496">
+    <Symbol UId="497">
+      <Component Name="Posiciones" UId="498">
+        <Token Text="[" UId="499" />
+        <Access Scope="LocalVariable" UId="500">
+          <Symbol UId="501">
+            <Component Name="j" UId="502" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="503" />
+        <Token Text="-" UId="504" />
+        <Blank Num="1" UId="505" />
+        <Access Scope="LiteralConstant" UId="506">
+          <Constant UId="507">
+            <ConstantValue UId="509">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text="]" UId="510" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="511" />
+  <Token Text="+" UId="512" />
+  <Blank Num="1" UId="513" />
+  <Access Scope="LocalVariable" UId="514">
+    <Symbol UId="515">
+      <Component Name="AnchoSup" UId="516" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="517" />
+  <Token Text="+" UId="518" />
+  <Blank Num="1" UId="519" />
+  <Access Scope="LocalConstant" UId="520">
+    <Constant Name="CuchillaConsume" UId="521" />
+  </Access>
+  <Token Text=";" UId="524" />
+  <Blank Num="2" UId="525" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="526">
+    <Text UId="527">Posiciona al siguiente cortador a #AnchoInf del anterior</Text>
+  </LineComment>
+  <NewLine Num="1" UId="528" />
+  <Blank Num="16" UId="529" />
+  <Access Scope="LocalVariable" UId="530">
+    <Symbol UId="531">
+      <Component Name="j" UId="532" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="533" />
+  <Token Text=":=" UId="534" />
+  <Blank Num="1" UId="535" />
+  <Access Scope="LocalVariable" UId="536">
+    <Symbol UId="537">
+      <Component Name="j" UId="538" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="539" />
+  <Token Text="+" UId="540" />
+  <Blank Num="1" UId="541" />
+  <Access Scope="LiteralConstant" UId="542">
+    <Constant UId="543">
+      <ConstantValue UId="545">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="546" />
+  <Blank Num="40" UId="547" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="548">
+    <Text UId="549">Siguiente cortador</Text>
+  </LineComment>
+  <NewLine Num="1" UId="550" />
+  <Blank Num="16" UId="551" />
+  <NewLine Num="1" UId="552" />
+  <Blank Num="12" UId="553" />
+  <Token Text="END_FOR" UId="554" />
+  <Token Text=";" UId="555" />
+  <NewLine Num="1" UId="556" />
+  <Blank Num="12" UId="557" />
+  <Token Text="FOR" UId="558" />
+  <Blank Num="1" UId="559" />
+  <Access Scope="LocalVariable" UId="560">
+    <Symbol UId="561">
+      <Component Name="i" UId="562" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="563" />
+  <Token Text=":=" UId="564" />
+  <Blank Num="1" UId="565" />
+  <Token Text="-" UId="566" />
+  <Blank Num="1" UId="567" />
+  <Access Scope="LocalVariable" UId="568">
+    <Symbol UId="569">
+      <Component Name="NPinf" UId="570" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="571" />
+  <Token Text="TO" UId="572" />
+  <Blank Num="1" UId="573" />
+  <Access Scope="LiteralConstant" UId="574">
+    <Constant UId="575">
+      <ConstantValue UId="577">-1</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="578" />
+  <Token Text="DO" UId="579" />
+  <Blank Num="2" UId="580" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="581">
+    <Text UId="582">Ciclo de los slitters inferiores</Text>
+  </LineComment>
+  <NewLine Num="1" UId="583" />
+  <Blank Num="16" UId="584" />
+  <NewLine Num="1" UId="585" />
+  <Blank Num="16" UId="586" />
+  <Access Scope="LocalVariable" UId="587">
+    <Symbol UId="588">
+      <Component Name="Posiciones" UId="589">
+        <Token Text="[" UId="590" />
+        <Access Scope="LocalVariable" UId="591">
+          <Symbol UId="592">
+            <Component Name="j" UId="593" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="594" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="595" />
+  <Token Text=":=" UId="596" />
+  <Blank Num="1" UId="597" />
+  <Access Scope="LocalVariable" UId="598">
+    <Symbol UId="599">
+      <Component Name="Posiciones" UId="600">
+        <Token Text="[" UId="601" />
+        <Access Scope="LocalVariable" UId="602">
+          <Symbol UId="603">
+            <Component Name="j" UId="604" />
+          </Symbol>
+        </Access>
+        <Blank Num="1" UId="605" />
+        <Token Text="-" UId="606" />
+        <Blank Num="1" UId="607" />
+        <Access Scope="LiteralConstant" UId="608">
+          <Constant UId="609">
+            <ConstantValue UId="611">1</ConstantValue>
+          </Constant>
+        </Access>
+        <Token Text="]" UId="612" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="613" />
+  <Token Text="+" UId="614" />
+  <Blank Num="1" UId="615" />
+  <Access Scope="LocalVariable" UId="616">
+    <Symbol UId="617">
+      <Component Name="AnchoInf" UId="618" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="619" />
+  <Token Text="+" UId="620" />
+  <Blank Num="1" UId="621" />
+  <Access Scope="LocalConstant" UId="622">
+    <Constant Name="CuchillaConsume" UId="623" />
+  </Access>
+  <Token Text=";" UId="626" />
+  <Blank Num="2" UId="627" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="628">
+    <Text UId="629">Posiciona al siguiente cortador a #AnchoInf del anterior</Text>
+  </LineComment>
+  <NewLine Num="1" UId="630" />
+  <Blank Num="16" UId="631" />
+  <Access Scope="LocalVariable" UId="632">
+    <Symbol UId="633">
+      <Component Name="j" UId="634" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="635" />
+  <Token Text=":=" UId="636" />
+  <Blank Num="1" UId="637" />
+  <Access Scope="LocalVariable" UId="638">
+    <Symbol UId="639">
+      <Component Name="j" UId="640" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="641" />
+  <Token Text="+" UId="642" />
+  <Blank Num="1" UId="643" />
+  <Access Scope="LiteralConstant" UId="644">
+    <Constant UId="645">
+      <ConstantValue UId="647">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="648" />
+  <Blank Num="40" UId="649" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="650">
+    <Text UId="651">Siguiente cortador</Text>
+  </LineComment>
+  <NewLine Num="1" UId="652" />
+  <Blank Num="16" UId="653" />
+  <NewLine Num="1" UId="654" />
+  <Blank Num="12" UId="655" />
+  <Token Text="END_FOR" UId="656" />
+  <Token Text=";" UId="657" />
+  <NewLine Num="1" UId="658" />
+  <Blank Num="8" UId="659" />
+  <Token Text="END_REGION" UId="660" />
+  <NewLine Num="1" UId="661" />
+  <Blank Num="8" UId="662" />
+  <NewLine Num="1" UId="663" />
+  <Blank Num="4" UId="664" />
+  <Token Text="END_IF" UId="665" />
+  <Token Text=";" UId="666" />
+  <NewLine Num="1" UId="667" />
+  <Blank Num="4" UId="668" />
+  <NewLine Num="1" UId="669" />
+  <Blank Num="4" UId="670" />
+  <NewLine Num="1" UId="671" />
+  <Token Text="END_REGION" UId="672" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="13" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="14" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Posiciona los slitters con punto de referencia X=0 al extremo izquierdo de la lamina de entrada visto desde la direccion en la que se alimenta a la maquina.</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="15" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="16" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Posicionar los slitters</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="17" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Blank Num="4" UId="21" />
+  <Token Text="REGION" UId="22" />
+  <Blank Num="1" UId="23" />
+  <Text UId="24">Salidas</Text>
+  <NewLine Num="1" UId="25" />
+  <Blank Num="8" UId="26" />
+  <NewLine Num="1" UId="27" />
+  <Blank Num="8" UId="28" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="29">
+    <Text UId="30">Como las posiciones estan con respecto a lamina y no a la maquina</Text>
+  </LineComment>
+  <NewLine Num="1" UId="31" />
+  <Blank Num="8" UId="32" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="33">
+    <Text UId="34">Se obtiene el desfase del extremo izquierdo de la maquina con el </Text>
+  </LineComment>
+  <NewLine Num="1" UId="35" />
+  <Blank Num="8" UId="36" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="37">
+    <Text UId="38">extremo izquierdo de la lamina, asumiendo que la lamina y la maquina estan centradas</Text>
+  </LineComment>
+  <NewLine Num="1" UId="39" />
+  <Blank Num="8" UId="40" />
+  <Access Scope="LocalVariable" UId="41">
+    <Symbol UId="42">
+      <Component Name="Xref" UId="43" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="44" />
+  <Token Text=":=" UId="45" />
+  <Blank Num="1" UId="46" />
+  <Token Text="(" UId="47" />
+  <Access Scope="LocalConstant" UId="48">
+    <Constant Name="AnchoMaquina" UId="49" />
+  </Access>
+  <Blank Num="1" UId="52" />
+  <Token Text="-" UId="53" />
+  <Blank Num="1" UId="54" />
+  <Access Scope="LocalVariable" UId="55">
+    <Symbol UId="56">
+      <Component Name="AnchoLamina" UId="57" />
+    </Symbol>
+  </Access>
+  <Token Text=")" UId="58" />
+  <Blank Num="1" UId="59" />
+  <Token Text="/" UId="60" />
+  <Blank Num="1" UId="61" />
+  <Access Scope="LiteralConstant" UId="62">
+    <Constant UId="63">
+      <ConstantValue UId="65">2</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="66" />
+  <NewLine Num="1" UId="67" />
+  <Blank Num="8" UId="68" />
+  <NewLine Num="1" UId="69" />
+  <Blank Num="8" UId="70" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="71">
+    <Text UId="72">Si la posicion original no es cero, da la salida</Text>
+  </LineComment>
+  <NewLine Num="1" UId="73" />
+  <Blank Num="8" UId="74" />
+  <Token Text="FOR" UId="75" />
+  <Blank Num="1" UId="76" />
+  <Access Scope="LocalVariable" UId="77">
+    <Symbol UId="78">
+      <Component Name="i" UId="79" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="80" />
+  <Token Text=":=" UId="81" />
+  <Blank Num="1" UId="82" />
+  <Access Scope="LiteralConstant" UId="83">
+    <Constant UId="84">
+      <ConstantValue UId="86">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="87" />
+  <Token Text="TO" UId="88" />
+  <Blank Num="1" UId="89" />
+  <Access Scope="LiteralConstant" UId="90">
+    <Constant UId="91">
+      <ConstantValue UId="93">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="94" />
+  <Token Text="DO" UId="95" />
+  <NewLine Num="1" UId="96" />
+  <Blank Num="12" UId="97" />
+  <Token Text="IF" UId="98" />
+  <Blank Num="1" UId="99" />
+  <Access Scope="LocalVariable" UId="100">
+    <Symbol UId="101">
+      <Component Name="Posiciones" UId="102">
+        <Token Text="[" UId="103" />
+        <Access Scope="LocalVariable" UId="104">
+          <Symbol UId="105">
+            <Component Name="i" UId="106" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="107" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="108" />
+  <Token Text="&gt;" UId="109" />
+  <Blank Num="1" UId="110" />
+  <Access Scope="LiteralConstant" UId="111">
+    <Constant UId="112">
+      <ConstantValue UId="114">0.0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="115" />
+  <Token Text="THEN" UId="116" />
+  <NewLine Num="1" UId="117" />
+  <Blank Num="16" UId="118" />
+  <Access Scope="LocalVariable" UId="119">
+    <Symbol UId="120">
+      <Component Name="PosicionesSalidas" UId="121">
+        <Token Text="[" UId="122" />
+        <Access Scope="LocalVariable" UId="123">
+          <Symbol UId="124">
+            <Component Name="i" UId="125" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="126" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="127" />
+  <Token Text=":=" UId="128" />
+  <Blank Num="1" UId="129" />
+  <Access Scope="LocalVariable" UId="130">
+    <Symbol UId="131">
+      <Component Name="Posiciones" UId="132">
+        <Token Text="[" UId="133" />
+        <Access Scope="LocalVariable" UId="134">
+          <Symbol UId="135">
+            <Component Name="i" UId="136" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="137" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="138" />
+  <Token Text="+" UId="139" />
+  <Blank Num="1" UId="140" />
+  <Access Scope="LocalVariable" UId="141">
+    <Symbol UId="142">
+      <Component Name="Xref" UId="143" />
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="144" />
+  <NewLine Num="1" UId="145" />
+  <Blank Num="12" UId="146" />
+  <Token Text="ELSE" UId="147" />
+  <NewLine Num="1" UId="148" />
+  <Blank Num="16" UId="149" />
+  <Access Scope="LocalVariable" UId="150">
+    <Symbol UId="151">
+      <Component Name="PosicionesSalidas" UId="152">
+        <Token Text="[" UId="153" />
+        <Access Scope="LocalVariable" UId="154">
+          <Symbol UId="155">
+            <Component Name="i" UId="156" />
+          </Symbol>
+        </Access>
+        <Token Text="]" UId="157" />
+      </Component>
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="158" />
+  <Token Text=":=" UId="159" />
+  <Blank Num="1" UId="160" />
+  <Access Scope="LiteralConstant" UId="161">
+    <Constant UId="162">
+      <ConstantValue UId="164">0.0</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="165" />
+  <NewLine Num="1" UId="166" />
+  <Blank Num="12" UId="167" />
+  <Token Text="END_IF" UId="168" />
+  <Token Text=";" UId="169" />
+  <NewLine Num="1" UId="170" />
+  <Blank Num="8" UId="171" />
+  <Token Text="END_FOR" UId="172" />
+  <Token Text=";" UId="173" />
+  <NewLine Num="1" UId="174" />
+  <Blank Num="8" UId="175" />
+  <NewLine Num="1" UId="176" />
+  <Blank Num="8" UId="177" />
+  <Access Scope="LocalVariable" UId="178">
+    <Symbol UId="179">
+      <Component Name="PosicionarSlitters" UId="180" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="181" />
+  <Token Text=":=" UId="182" />
+  <Blank Num="1" UId="183" />
+  <Access Scope="LiteralConstant" UId="184">
+    <Constant UId="185">
+      <ConstantValue UId="187">'Slitters posicionados con exito'</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="188" />
+  <NewLine Num="1" UId="189" />
+  <Blank Num="8" UId="190" />
+  <Token Text="RETURN" UId="191" />
+  <Token Text=";" UId="192" />
+  <NewLine Num="1" UId="193" />
+  <Blank Num="8" UId="194" />
+  <NewLine Num="1" UId="195" />
+  <Blank Num="4" UId="196" />
+  <Token Text="END_REGION" UId="197" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="18" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="19" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Vacia el array de posiciones al array de salida</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="1A" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="1B" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Salidas</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="1C" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="1D" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>Calculo de posicionamiento de slitters</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.FC>
+</Document>

@@ -1,0 +1,1119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V16" />
+  <DocumentInfo>
+    <Created>2022-07-03T01:19:42.1939174Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Blocks.FC ID="0">
+    <AttributeList>
+      <AutoNumber>true</AutoNumber>
+      <HeaderAuthor />
+      <HeaderFamily />
+      <HeaderName />
+      <HeaderVersion>0.1</HeaderVersion>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
+  <Section Name="Input">
+    <Member Name="i_enfocado" Datatype="Int" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Cabezal a la estudiado</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="Servos" Datatype="Array[0..50] of &quot;MC_PosAxis&quot;" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Array de datos de servos</MultiLanguageText>
+      </Comment>
+      <Sections>
+        <Section Name="None">
+          <Member Name="MC_reset" Datatype="Bool" />
+          <Member Name="MC_set_home" Datatype="Bool" />
+          <Member Name="MC_power" Datatype="Bool" />
+          <Member Name="MC_jog_fw" Datatype="Bool" />
+          <Member Name="MC_jog_bw" Datatype="Bool" />
+          <Member Name="MC_exe_abs_move" Datatype="Bool" />
+          <Member Name="MC_move_direction" Datatype="Int" />
+          <Member Name="MC_halt" Datatype="Bool" />
+          <Member Name="Sp_Abs_pos" Datatype="LReal" />
+          <Member Name="Def_Home_Sp" Datatype="LReal" />
+          <Member Name="Actual_speed" Datatype="LReal" />
+          <Member Name="Actual_Velocity" Datatype="LReal" />
+          <Member Name="Actual_position" Datatype="Real" />
+          <Member Name="MC_standstill" Datatype="Bool" />
+          <Member Name="MC_error" Datatype="Bool" />
+          <Member Name="MC_done" Datatype="Bool" />
+          <Member Name="MC_busy" Datatype="Bool" />
+          <Member Name="Drive_Enable" Datatype="Bool" />
+        </Section>
+      </Sections>
+    </Member>
+  </Section>
+  <Section Name="Output">
+    <Member Name="OK" Datatype="Bool" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Permiso de movimiento</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="Done" Datatype="Bool" Accessibility="Public">
+      <Comment>
+        <MultiLanguageText Lang="en-US">El cabezal termino de moverse</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+  <Section Name="InOut" />
+  <Section Name="Temp">
+    <Member Name="Estorbo" Datatype="Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Posicion actual del cabezal que estorba</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="Espacio" Datatype="Real">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Espacio entre el cabezal enfocado y el que le estorba</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="i_izquierda" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">cabezal a la izquierda</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="i_derecha" Datatype="Int">
+      <Comment>
+        <MultiLanguageText Lang="en-US">cabezal a la derecha</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="izlibre" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Captura si la izquierda esta libre</MultiLanguageText>
+      </Comment>
+    </Member>
+    <Member Name="derlibre" Datatype="Bool">
+      <Comment>
+        <MultiLanguageText Lang="en-US">Captura si la derecha esta libre</MultiLanguageText>
+      </Comment>
+    </Member>
+  </Section>
+  <Section Name="Constant" />
+  <Section Name="Return">
+    <Member Name="Ret_Val" Datatype="Void" Accessibility="Public" />
+  </Section>
+</Sections></Interface>
+      <IsIECCheckEnabled>false</IsIECCheckEnabled>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <Name>EvaluacionMovimiento</Name>
+      <Number>10</Number>
+      <ProgrammingLanguage>LAD</ProgrammingLanguage>
+      <SetENOAutomatically>false</SetENOAutomatically>
+      <UDABlockProperties />
+      <UDAEnableTagReadback>false</UDAEnableTagReadback>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <SW.Blocks.CompileUnit ID="3" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><StructuredText xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/StructuredText/v3">
+  <Access Scope="LocalVariable" UId="21">
+    <Symbol UId="22">
+      <Component Name="i_izquierda" UId="23" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="24" />
+  <Token Text=":=" UId="25" />
+  <Blank Num="1" UId="26" />
+  <Access Scope="LocalVariable" UId="27">
+    <Symbol UId="28">
+      <Component Name="i_enfocado" UId="29" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="30" />
+  <Token Text="-" UId="31" />
+  <Blank Num="1" UId="32" />
+  <Access Scope="LiteralConstant" UId="33">
+    <Constant UId="34">
+      <ConstantValue UId="36">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="37" />
+  <NewLine Num="2" UId="38" />
+  <Access Scope="LocalVariable" UId="39">
+    <Symbol UId="40">
+      <Component Name="i_derecha" UId="41" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="42" />
+  <Token Text=":=" UId="43" />
+  <Blank Num="1" UId="44" />
+  <Access Scope="LocalVariable" UId="45">
+    <Symbol UId="46">
+      <Component Name="i_enfocado" UId="47" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="48" />
+  <Token Text="+" UId="49" />
+  <Blank Num="1" UId="50" />
+  <Access Scope="LiteralConstant" UId="51">
+    <Constant UId="52">
+      <ConstantValue UId="54">1</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="55" />
+  <NewLine Num="2" UId="56" />
+  <Access Scope="LocalVariable" UId="57">
+    <Symbol UId="58">
+      <Component Name="izlibre" UId="59" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="60" />
+  <Token Text=":=" UId="61" />
+  <Blank Num="1" UId="62" />
+  <Access Scope="LiteralConstant" UId="63">
+    <Constant UId="64">
+      <ConstantValue UId="66">False</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="67" />
+  <Blank Num="6" UId="68" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="69">
+    <Text UId="70">Reinicia variables de via libre</Text>
+  </LineComment>
+  <NewLine Num="1" UId="71" />
+  <Access Scope="LocalVariable" UId="72">
+    <Symbol UId="73">
+      <Component Name="derlibre" UId="74" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="75" />
+  <Token Text=":=" UId="76" />
+  <Blank Num="1" UId="77" />
+  <Access Scope="LiteralConstant" UId="78">
+    <Constant UId="79">
+      <ConstantValue UId="81">False</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="82" />
+  <NewLine Num="2" UId="83" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="84">
+    <Text UId="85">Cabezales que tienen la izquierda libre</Text>
+  </LineComment>
+  <NewLine Num="1" UId="86" />
+  <Token Text="IF" UId="87" />
+  <Blank Num="1" UId="88" />
+  <Access Scope="LocalVariable" UId="89">
+    <Symbol UId="90">
+      <Component Name="i_enfocado" UId="91" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="92" />
+  <Token Text="=" UId="93" />
+  <Blank Num="1" UId="94" />
+  <Access Scope="LiteralConstant" UId="95">
+    <Constant UId="96">
+      <ConstantValue UId="98">0</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="99" />
+  <Token Text="OR" UId="100" />
+  <Blank Num="1" UId="101" />
+  <Access Scope="LocalVariable" UId="102">
+    <Symbol UId="103">
+      <Component Name="i_enfocado" UId="104" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="105" />
+  <Token Text="=" UId="106" />
+  <Blank Num="1" UId="107" />
+  <Access Scope="LiteralConstant" UId="108">
+    <Constant UId="109">
+      <ConstantValue UId="111">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="112" />
+  <Token Text="OR" UId="113" />
+  <Blank Num="1" UId="114" />
+  <Access Scope="LocalVariable" UId="115">
+    <Symbol UId="116">
+      <Component Name="i_enfocado" UId="117" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="118" />
+  <Token Text="=" UId="119" />
+  <Blank Num="1" UId="120" />
+  <Access Scope="LiteralConstant" UId="121">
+    <Constant UId="122">
+      <ConstantValue UId="124">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="125" />
+  <Token Text="+" UId="126" />
+  <Blank Num="1" UId="127" />
+  <Access Scope="LiteralConstant" UId="128">
+    <Constant UId="129">
+      <ConstantValue UId="131">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="132" />
+  <Token Text="OR" UId="133" />
+  <Blank Num="1" UId="134" />
+  <Access Scope="LocalVariable" UId="135">
+    <Symbol UId="136">
+      <Component Name="i_enfocado" UId="137" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="138" />
+  <Token Text="=" UId="139" />
+  <Blank Num="1" UId="140" />
+  <Access Scope="LiteralConstant" UId="141">
+    <Constant UId="142">
+      <ConstantValue UId="144">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="145" />
+  <Token Text="+" UId="146" />
+  <Blank Num="1" UId="147" />
+  <Access Scope="LiteralConstant" UId="148">
+    <Constant UId="149">
+      <ConstantValue UId="151">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="152" />
+  <Token Text="+" UId="153" />
+  <Blank Num="1" UId="154" />
+  <Access Scope="LiteralConstant" UId="155">
+    <Constant UId="156">
+      <ConstantValue UId="158">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="159" />
+  <Token Text="OR" UId="160" />
+  <Blank Num="1" UId="161" />
+  <Access Scope="LocalVariable" UId="162">
+    <Symbol UId="163">
+      <Component Name="i_enfocado" UId="164" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="165" />
+  <Token Text="=" UId="166" />
+  <Blank Num="1" UId="167" />
+  <Access Scope="LiteralConstant" UId="168">
+    <Constant UId="169">
+      <ConstantValue UId="171">7</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="172" />
+  <Token Text="+" UId="173" />
+  <Blank Num="1" UId="174" />
+  <Access Scope="LiteralConstant" UId="175">
+    <Constant UId="176">
+      <ConstantValue UId="178">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="179" />
+  <Token Text="+" UId="180" />
+  <Blank Num="1" UId="181" />
+  <Access Scope="LiteralConstant" UId="182">
+    <Constant UId="183">
+      <ConstantValue UId="185">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="186" />
+  <Token Text="+" UId="187" />
+  <Blank Num="1" UId="188" />
+  <Access Scope="LiteralConstant" UId="189">
+    <Constant UId="190">
+      <ConstantValue UId="192">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="193" />
+  <Token Text="THEN" UId="194" />
+  <NewLine Num="1" UId="195" />
+  <Blank Num="4" UId="196" />
+  <Access Scope="LocalVariable" UId="197">
+    <Symbol UId="198">
+      <Component Name="i_izquierda" UId="199" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="200" />
+  <Token Text=":=" UId="201" />
+  <Blank Num="1" UId="202" />
+  <Access Scope="LocalVariable" UId="203">
+    <Symbol UId="204">
+      <Component Name="i_derecha" UId="205" />
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="206" />
+  <NewLine Num="1" UId="207" />
+  <Blank Num="4" UId="208" />
+  <Access Scope="LocalVariable" UId="209">
+    <Symbol UId="210">
+      <Component Name="izlibre" UId="211" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="212" />
+  <Token Text=":=" UId="213" />
+  <Blank Num="1" UId="214" />
+  <Access Scope="LiteralConstant" UId="215">
+    <Constant UId="216">
+      <ConstantValue UId="218">TRUE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="219" />
+  <NewLine Num="1" UId="220" />
+  <Token Text="END_IF" UId="221" />
+  <Token Text=";" UId="222" />
+  <NewLine Num="2" UId="223" />
+  <LineComment Inserted="false" NoClosingBracket="false" UId="224">
+    <Text UId="225">Cabezales que tienen la derecha libre</Text>
+  </LineComment>
+  <NewLine Num="1" UId="226" />
+  <Token Text="IF" UId="227" />
+  <Blank Num="1" UId="228" />
+  <Access Scope="LocalVariable" UId="229">
+    <Symbol UId="230">
+      <Component Name="i_enfocado" UId="231" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="232" />
+  <Token Text="=" UId="233" />
+  <Blank Num="1" UId="234" />
+  <Access Scope="LiteralConstant" UId="235">
+    <Constant UId="236">
+      <ConstantValue UId="238">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="239" />
+  <Token Text="OR" UId="240" />
+  <Blank Num="1" UId="241" />
+  <Access Scope="LocalVariable" UId="242">
+    <Symbol UId="243">
+      <Component Name="i_enfocado" UId="244" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="245" />
+  <Token Text="=" UId="246" />
+  <Blank Num="1" UId="247" />
+  <Access Scope="LiteralConstant" UId="248">
+    <Constant UId="249">
+      <ConstantValue UId="251">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="252" />
+  <Token Text="+" UId="253" />
+  <Blank Num="1" UId="254" />
+  <Access Scope="LiteralConstant" UId="255">
+    <Constant UId="256">
+      <ConstantValue UId="258">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="259" />
+  <Token Text="OR" UId="260" />
+  <Blank Num="1" UId="261" />
+  <Access Scope="LocalVariable" UId="262">
+    <Symbol UId="263">
+      <Component Name="i_enfocado" UId="264" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="265" />
+  <Token Text="=" UId="266" />
+  <Blank Num="1" UId="267" />
+  <Access Scope="LiteralConstant" UId="268">
+    <Constant UId="269">
+      <ConstantValue UId="271">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="272" />
+  <Token Text="+" UId="273" />
+  <Blank Num="1" UId="274" />
+  <Access Scope="LiteralConstant" UId="275">
+    <Constant UId="276">
+      <ConstantValue UId="278">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="279" />
+  <Token Text="+" UId="280" />
+  <Blank Num="1" UId="281" />
+  <Access Scope="LiteralConstant" UId="282">
+    <Constant UId="283">
+      <ConstantValue UId="285">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="286" />
+  <Token Text="OR" UId="287" />
+  <Blank Num="1" UId="288" />
+  <Access Scope="LocalVariable" UId="289">
+    <Symbol UId="290">
+      <Component Name="i_enfocado" UId="291" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="292" />
+  <Token Text="=" UId="293" />
+  <Blank Num="1" UId="294" />
+  <Access Scope="LiteralConstant" UId="295">
+    <Constant UId="296">
+      <ConstantValue UId="298">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="299" />
+  <Token Text="+" UId="300" />
+  <Blank Num="1" UId="301" />
+  <Access Scope="LiteralConstant" UId="302">
+    <Constant UId="303">
+      <ConstantValue UId="305">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="306" />
+  <Token Text="+" UId="307" />
+  <Blank Num="1" UId="308" />
+  <Access Scope="LiteralConstant" UId="309">
+    <Constant UId="310">
+      <ConstantValue UId="312">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="313" />
+  <Token Text="+" UId="314" />
+  <Blank Num="1" UId="315" />
+  <Access Scope="LiteralConstant" UId="316">
+    <Constant UId="317">
+      <ConstantValue UId="319">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="320" />
+  <Token Text="OR" UId="321" />
+  <Blank Num="1" UId="322" />
+  <Access Scope="LocalVariable" UId="323">
+    <Symbol UId="324">
+      <Component Name="i_enfocado" UId="325" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="326" />
+  <Token Text="=" UId="327" />
+  <Blank Num="1" UId="328" />
+  <Access Scope="LiteralConstant" UId="329">
+    <Constant UId="330">
+      <ConstantValue UId="332">6</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="333" />
+  <Token Text="+" UId="334" />
+  <Blank Num="1" UId="335" />
+  <Access Scope="LiteralConstant" UId="336">
+    <Constant UId="337">
+      <ConstantValue UId="339">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="340" />
+  <Token Text="+" UId="341" />
+  <Blank Num="1" UId="342" />
+  <Access Scope="LiteralConstant" UId="343">
+    <Constant UId="344">
+      <ConstantValue UId="346">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="347" />
+  <Token Text="+" UId="348" />
+  <Blank Num="1" UId="349" />
+  <Access Scope="LiteralConstant" UId="350">
+    <Constant UId="351">
+      <ConstantValue UId="353">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="354" />
+  <Token Text="+" UId="355" />
+  <Blank Num="1" UId="356" />
+  <Access Scope="LiteralConstant" UId="357">
+    <Constant UId="358">
+      <ConstantValue UId="360">8</ConstantValue>
+    </Constant>
+  </Access>
+  <Blank Num="1" UId="361" />
+  <Token Text="THEN" UId="362" />
+  <NewLine Num="1" UId="363" />
+  <Blank Num="4" UId="364" />
+  <Access Scope="LocalVariable" UId="365">
+    <Symbol UId="366">
+      <Component Name="i_derecha" UId="367" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="368" />
+  <Token Text=":=" UId="369" />
+  <Blank Num="1" UId="370" />
+  <Access Scope="LocalVariable" UId="371">
+    <Symbol UId="372">
+      <Component Name="i_izquierda" UId="373" />
+    </Symbol>
+  </Access>
+  <Token Text=";" UId="374" />
+  <NewLine Num="1" UId="375" />
+  <Blank Num="4" UId="376" />
+  <Access Scope="LocalVariable" UId="377">
+    <Symbol UId="378">
+      <Component Name="derlibre" UId="379" />
+    </Symbol>
+  </Access>
+  <Blank Num="1" UId="380" />
+  <Token Text=":=" UId="381" />
+  <Blank Num="1" UId="382" />
+  <Access Scope="LiteralConstant" UId="383">
+    <Constant UId="384">
+      <ConstantValue UId="386">TRUE</ConstantValue>
+    </Constant>
+  </Access>
+  <Token Text=";" UId="387" />
+  <NewLine Num="1" UId="388" />
+  <Token Text="END_IF" UId="389" />
+  <Token Text=";" UId="390" />
+</StructuredText></NetworkSource>
+          <ProgrammingLanguage>SCL</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="4" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="5" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Calcula el indice del cabezal a la izquierda y el cabezal a la derecha</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="6" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="7" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Calcular indices</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <SW.Blocks.CompileUnit ID="8" CompositionName="CompileUnits">
+        <AttributeList>
+          <NetworkSource><FlgNet xmlns="http://www.siemens.com/automation/Openness/SW/NetworkSource/FlgNet/v4">
+  <Parts>
+    <Access Scope="LocalVariable" UId="21">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_enfocado" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="MC_move_direction" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="22">
+      <Constant>
+        <ConstantType>Int</ConstantType>
+        <ConstantValue>1</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="23">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_derecha" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="Actual_position" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="24">
+      <Symbol>
+        <Component Name="Estorbo" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="25">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_derecha" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="MC_move_direction" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="26">
+      <Constant>
+        <ConstantType>Int</ConstantType>
+        <ConstantValue>3</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="27">
+      <Symbol>
+        <Component Name="derlibre" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="28">
+      <Symbol>
+        <Component Name="OK" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="29">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_enfocado" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="MC_move_direction" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="30">
+      <Constant>
+        <ConstantType>Int</ConstantType>
+        <ConstantValue>2</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="31">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_izquierda" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="Actual_position" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="32">
+      <Symbol>
+        <Component Name="Estorbo" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="33">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_izquierda" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="MC_move_direction" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="34">
+      <Constant>
+        <ConstantType>Int</ConstantType>
+        <ConstantValue>3</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="35">
+      <Symbol>
+        <Component Name="izlibre" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="36">
+      <Symbol>
+        <Component Name="OK" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="37">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_enfocado" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="Actual_position" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="38">
+      <Symbol>
+        <Component Name="Estorbo" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="39">
+      <Symbol>
+        <Component Name="Espacio" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="40">
+      <Symbol>
+        <Component Name="Servos" AccessModifier="Array">
+          <Access Scope="LocalVariable">
+            <Symbol>
+              <Component Name="i_enfocado" />
+            </Symbol>
+          </Access>
+        </Component>
+        <Component Name="MC_move_direction" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="41">
+      <Constant>
+        <ConstantType>Int</ConstantType>
+        <ConstantValue>3</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="42">
+      <Symbol>
+        <Component Name="Done" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="43">
+      <Symbol>
+        <Component Name="Espacio" />
+      </Symbol>
+    </Access>
+    <Access Scope="LiteralConstant" UId="44">
+      <Constant>
+        <ConstantType>Real</ConstantType>
+        <ConstantValue>150.0</ConstantValue>
+      </Constant>
+    </Access>
+    <Access Scope="LocalVariable" UId="45">
+      <Symbol>
+        <Component Name="Done" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="46">
+      <Symbol>
+        <Component Name="OK" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="47">
+      <Symbol>
+        <Component Name="izlibre" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="48">
+      <Symbol>
+        <Component Name="derlibre" />
+      </Symbol>
+    </Access>
+    <Access Scope="LocalVariable" UId="49">
+      <Symbol>
+        <Component Name="OK" />
+      </Symbol>
+    </Access>
+    <Part Name="Eq" UId="50">
+      <TemplateValue Name="SrcType" Type="Type">Int</TemplateValue>
+    </Part>
+    <Part Name="Move" UId="51" DisabledENO="true">
+      <TemplateValue Name="Card" Type="Cardinality">1</TemplateValue>
+    </Part>
+    <Part Name="Eq" UId="52">
+      <TemplateValue Name="SrcType" Type="Type">Int</TemplateValue>
+    </Part>
+    <Part Name="Contact" UId="53" />
+    <Part Name="O" UId="54">
+      <TemplateValue Name="Card" Type="Cardinality">2</TemplateValue>
+    </Part>
+    <Part Name="Coil" UId="55" />
+    <Part Name="Eq" UId="56">
+      <TemplateValue Name="SrcType" Type="Type">Int</TemplateValue>
+    </Part>
+    <Part Name="Move" UId="57" DisabledENO="true">
+      <TemplateValue Name="Card" Type="Cardinality">1</TemplateValue>
+    </Part>
+    <Part Name="Eq" UId="58">
+      <TemplateValue Name="SrcType" Type="Type">Int</TemplateValue>
+    </Part>
+    <Part Name="Contact" UId="59" />
+    <Part Name="O" UId="60">
+      <TemplateValue Name="Card" Type="Cardinality">2</TemplateValue>
+    </Part>
+    <Part Name="Coil" UId="61" />
+    <Part Name="Calc" UId="62" DisabledENO="true">
+      <Equation>ABS(IN2-IN1)</Equation>
+      <TemplateValue Name="Card" Type="Cardinality">2</TemplateValue>
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="Eq" UId="63">
+      <TemplateValue Name="SrcType" Type="Type">Int</TemplateValue>
+    </Part>
+    <Part Name="Coil" UId="64" />
+    <Part Name="Ge" UId="65">
+      <TemplateValue Name="SrcType" Type="Type">Real</TemplateValue>
+    </Part>
+    <Part Name="Contact" UId="66" />
+    <Part Name="Contact" UId="67" />
+    <Part Name="Contact" UId="68" />
+    <Part Name="Contact" UId="69" />
+    <Part Name="O" UId="70">
+      <TemplateValue Name="Card" Type="Cardinality">4</TemplateValue>
+    </Part>
+    <Part Name="Coil" UId="71" />
+  </Parts>
+  <Wires>
+    <Wire UId="72">
+      <Powerrail />
+      <NameCon UId="50" Name="pre" />
+      <NameCon UId="56" Name="pre" />
+      <NameCon UId="62" Name="en" />
+      <NameCon UId="63" Name="pre" />
+      <NameCon UId="65" Name="pre" />
+      <NameCon UId="66" Name="in" />
+      <NameCon UId="67" Name="in" />
+    </Wire>
+    <Wire UId="73">
+      <IdentCon UId="21" />
+      <NameCon UId="50" Name="in1" />
+    </Wire>
+    <Wire UId="74">
+      <IdentCon UId="22" />
+      <NameCon UId="50" Name="in2" />
+    </Wire>
+    <Wire UId="75">
+      <NameCon UId="50" Name="out" />
+      <NameCon UId="51" Name="en" />
+      <NameCon UId="52" Name="pre" />
+      <NameCon UId="53" Name="in" />
+    </Wire>
+    <Wire UId="76">
+      <IdentCon UId="23" />
+      <NameCon UId="51" Name="in" />
+    </Wire>
+    <Wire UId="77">
+      <NameCon UId="51" Name="out1" />
+      <IdentCon UId="24" />
+    </Wire>
+    <Wire UId="78">
+      <IdentCon UId="25" />
+      <NameCon UId="52" Name="in1" />
+    </Wire>
+    <Wire UId="79">
+      <IdentCon UId="26" />
+      <NameCon UId="52" Name="in2" />
+    </Wire>
+    <Wire UId="80">
+      <NameCon UId="52" Name="out" />
+      <NameCon UId="54" Name="in1" />
+    </Wire>
+    <Wire UId="81">
+      <IdentCon UId="27" />
+      <NameCon UId="53" Name="operand" />
+    </Wire>
+    <Wire UId="82">
+      <NameCon UId="53" Name="out" />
+      <NameCon UId="54" Name="in2" />
+    </Wire>
+    <Wire UId="83">
+      <NameCon UId="54" Name="out" />
+      <NameCon UId="55" Name="in" />
+    </Wire>
+    <Wire UId="84">
+      <IdentCon UId="28" />
+      <NameCon UId="55" Name="operand" />
+    </Wire>
+    <Wire UId="85">
+      <IdentCon UId="29" />
+      <NameCon UId="56" Name="in1" />
+    </Wire>
+    <Wire UId="86">
+      <IdentCon UId="30" />
+      <NameCon UId="56" Name="in2" />
+    </Wire>
+    <Wire UId="87">
+      <NameCon UId="56" Name="out" />
+      <NameCon UId="57" Name="en" />
+      <NameCon UId="58" Name="pre" />
+      <NameCon UId="59" Name="in" />
+    </Wire>
+    <Wire UId="88">
+      <IdentCon UId="31" />
+      <NameCon UId="57" Name="in" />
+    </Wire>
+    <Wire UId="89">
+      <NameCon UId="57" Name="out1" />
+      <IdentCon UId="32" />
+    </Wire>
+    <Wire UId="90">
+      <IdentCon UId="33" />
+      <NameCon UId="58" Name="in1" />
+    </Wire>
+    <Wire UId="91">
+      <IdentCon UId="34" />
+      <NameCon UId="58" Name="in2" />
+    </Wire>
+    <Wire UId="92">
+      <NameCon UId="58" Name="out" />
+      <NameCon UId="60" Name="in1" />
+    </Wire>
+    <Wire UId="93">
+      <IdentCon UId="35" />
+      <NameCon UId="59" Name="operand" />
+    </Wire>
+    <Wire UId="94">
+      <NameCon UId="59" Name="out" />
+      <NameCon UId="60" Name="in2" />
+    </Wire>
+    <Wire UId="95">
+      <NameCon UId="60" Name="out" />
+      <NameCon UId="61" Name="in" />
+    </Wire>
+    <Wire UId="96">
+      <IdentCon UId="36" />
+      <NameCon UId="61" Name="operand" />
+    </Wire>
+    <Wire UId="97">
+      <IdentCon UId="37" />
+      <NameCon UId="62" Name="in1" />
+    </Wire>
+    <Wire UId="98">
+      <IdentCon UId="38" />
+      <NameCon UId="62" Name="in2" />
+    </Wire>
+    <Wire UId="99">
+      <NameCon UId="62" Name="out" />
+      <IdentCon UId="39" />
+    </Wire>
+    <Wire UId="100">
+      <IdentCon UId="40" />
+      <NameCon UId="63" Name="in1" />
+    </Wire>
+    <Wire UId="101">
+      <IdentCon UId="41" />
+      <NameCon UId="63" Name="in2" />
+    </Wire>
+    <Wire UId="102">
+      <NameCon UId="63" Name="out" />
+      <NameCon UId="64" Name="in" />
+    </Wire>
+    <Wire UId="103">
+      <IdentCon UId="42" />
+      <NameCon UId="64" Name="operand" />
+    </Wire>
+    <Wire UId="104">
+      <IdentCon UId="43" />
+      <NameCon UId="65" Name="in1" />
+    </Wire>
+    <Wire UId="105">
+      <IdentCon UId="44" />
+      <NameCon UId="65" Name="in2" />
+    </Wire>
+    <Wire UId="106">
+      <NameCon UId="65" Name="out" />
+      <NameCon UId="70" Name="in1" />
+    </Wire>
+    <Wire UId="107">
+      <IdentCon UId="45" />
+      <NameCon UId="66" Name="operand" />
+    </Wire>
+    <Wire UId="108">
+      <NameCon UId="66" Name="out" />
+      <NameCon UId="70" Name="in2" />
+    </Wire>
+    <Wire UId="109">
+      <IdentCon UId="46" />
+      <NameCon UId="67" Name="operand" />
+    </Wire>
+    <Wire UId="110">
+      <NameCon UId="67" Name="out" />
+      <NameCon UId="68" Name="in" />
+      <NameCon UId="69" Name="in" />
+    </Wire>
+    <Wire UId="111">
+      <IdentCon UId="47" />
+      <NameCon UId="68" Name="operand" />
+    </Wire>
+    <Wire UId="112">
+      <NameCon UId="68" Name="out" />
+      <NameCon UId="70" Name="in3" />
+    </Wire>
+    <Wire UId="113">
+      <IdentCon UId="48" />
+      <NameCon UId="69" Name="operand" />
+    </Wire>
+    <Wire UId="114">
+      <NameCon UId="69" Name="out" />
+      <NameCon UId="70" Name="in4" />
+    </Wire>
+    <Wire UId="115">
+      <NameCon UId="70" Name="out" />
+      <NameCon UId="71" Name="in" />
+    </Wire>
+    <Wire UId="116">
+      <IdentCon UId="49" />
+      <NameCon UId="71" Name="operand" />
+    </Wire>
+  </Wires>
+</FlgNet></NetworkSource>
+          <ProgrammingLanguage>LAD</ProgrammingLanguage>
+        </AttributeList>
+        <ObjectList>
+          <MultilingualText ID="9" CompositionName="Comment">
+            <ObjectList>
+              <MultilingualTextItem ID="A" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Condiciones para OK:
+     El cabezal enfocado esta a 150 mm o mas del cabezal en su camino
+     El cabezal que esta en el camino ya llego a su destino Move Direction = 3
+     El cabezal 1101 tiene movimiento libre a la izquierda i = 0
+     El cabezal 1107 tiene movimiento libre a la derecha   i = 6</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+          <MultilingualText ID="B" CompositionName="Title">
+            <ObjectList>
+              <MultilingualTextItem ID="C" CompositionName="Items">
+                <AttributeList>
+                  <Culture>en-US</Culture>
+                  <Text>Compara si la distancia entre un cabezal y el que le estorba es de 150 mm o mas</Text>
+                </AttributeList>
+              </MultilingualTextItem>
+            </ObjectList>
+          </MultilingualText>
+        </ObjectList>
+      </SW.Blocks.CompileUnit>
+      <MultilingualText ID="D" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="E" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text>Bloque de determinacion de permisos de ejecucion de movimiento de cabezales</Text>
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.FC>
+</Document>

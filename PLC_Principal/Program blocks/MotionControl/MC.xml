@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <Engineering version="V16" />
+  <DocumentInfo>
+    <Created>2022-07-03T01:19:40.9750839Z</Created>
+    <ExportSetting>WithDefaults</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Version Control Interface</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>STEP 7 Safety</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>WinCC Professional</DisplayName>
+        <DisplayVersion>V16</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <SW.Blocks.GlobalDB ID="0">
+    <AttributeList>
+      <AutoNumber>false</AutoNumber>
+      <DBAccessibleFromOPCUA>true</DBAccessibleFromOPCUA>
+      <HeaderAuthor />
+      <HeaderFamily />
+      <HeaderName />
+      <HeaderVersion>0.1</HeaderVersion>
+      <Interface><Sections xmlns="http://www.siemens.com/automation/Openness/SW/Interface/v4">
+  <Section Name="Static">
+    <Member Name="ServoMotor" Datatype="Array[0..50] of &quot;MC_PosAxis&quot;" Remanence="NonRetain" Accessibility="Public"><AttributeList><BooleanAttribute Name="ExternalAccessible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalVisible" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="ExternalWritable" SystemDefined="true">true</BooleanAttribute><BooleanAttribute Name="SetPoint" SystemDefined="true">false</BooleanAttribute></AttributeList><Sections><Section Name="None"><Member Name="MC_reset" Datatype="Bool" /><Member Name="MC_set_home" Datatype="Bool" /><Member Name="MC_power" Datatype="Bool" /><Member Name="MC_jog_fw" Datatype="Bool" /><Member Name="MC_jog_bw" Datatype="Bool" /><Member Name="MC_exe_abs_move" Datatype="Bool" /><Member Name="MC_move_direction" Datatype="Int" /><Member Name="MC_halt" Datatype="Bool" /><Member Name="Sp_Abs_pos" Datatype="LReal" /><Member Name="Def_Home_Sp" Datatype="LReal" /><Member Name="Actual_speed" Datatype="LReal" /><Member Name="Actual_Velocity" Datatype="LReal" /><Member Name="Actual_position" Datatype="Real" /><Member Name="MC_standstill" Datatype="Bool" /><Member Name="MC_error" Datatype="Bool" /><Member Name="MC_done" Datatype="Bool" /><Member Name="MC_busy" Datatype="Bool" /><Member Name="Drive_Enable" Datatype="Bool" /></Section></Sections><Subelement Path="0"><Comment><MultiLanguageText Lang="en-US">1101</MultiLanguageText></Comment></Subelement><Subelement Path="1"><Comment><MultiLanguageText Lang="en-US">1102</MultiLanguageText></Comment></Subelement><Subelement Path="2"><Comment><MultiLanguageText Lang="en-US">1103</MultiLanguageText></Comment></Subelement><Subelement Path="3"><Comment><MultiLanguageText Lang="en-US">1104</MultiLanguageText></Comment></Subelement><Subelement Path="4"><Comment><MultiLanguageText Lang="en-US">1105</MultiLanguageText></Comment></Subelement><Subelement Path="5"><Comment><MultiLanguageText Lang="en-US">1106</MultiLanguageText></Comment></Subelement><Subelement Path="6"><Comment><MultiLanguageText Lang="en-US">1107</MultiLanguageText></Comment></Subelement><Subelement Path="7"><Comment><MultiLanguageText Lang="en-US">2101</MultiLanguageText></Comment></Subelement><Subelement Path="8"><Comment><MultiLanguageText Lang="en-US">2102</MultiLanguageText></Comment></Subelement><Subelement Path="9"><Comment><MultiLanguageText Lang="en-US">2103</MultiLanguageText></Comment></Subelement><Subelement Path="10"><Comment><MultiLanguageText Lang="en-US">2104</MultiLanguageText></Comment></Subelement><Subelement Path="11"><Comment><MultiLanguageText Lang="en-US">2105</MultiLanguageText></Comment></Subelement><Subelement Path="12"><Comment><MultiLanguageText Lang="en-US">2106</MultiLanguageText></Comment></Subelement><Subelement Path="13"><Comment><MultiLanguageText Lang="en-US">2107</MultiLanguageText></Comment></Subelement><Subelement Path="14"><Comment><MultiLanguageText Lang="en-US">2108</MultiLanguageText></Comment></Subelement><Subelement Path="15"><Comment><MultiLanguageText Lang="en-US">2201</MultiLanguageText></Comment></Subelement><Subelement Path="16"><Comment><MultiLanguageText Lang="en-US">2202</MultiLanguageText></Comment></Subelement><Subelement Path="17"><Comment><MultiLanguageText Lang="en-US">2203</MultiLanguageText></Comment></Subelement><Subelement Path="18"><Comment><MultiLanguageText Lang="en-US">2204</MultiLanguageText></Comment></Subelement><Subelement Path="19"><Comment><MultiLanguageText Lang="en-US">2205</MultiLanguageText></Comment></Subelement><Subelement Path="20"><Comment><MultiLanguageText Lang="en-US">2206</MultiLanguageText></Comment></Subelement><Subelement Path="21"><Comment><MultiLanguageText Lang="en-US">2207</MultiLanguageText></Comment></Subelement><Subelement Path="22"><Comment><MultiLanguageText Lang="en-US">2208</MultiLanguageText></Comment></Subelement><Subelement Path="23"><Comment><MultiLanguageText Lang="en-US">3101</MultiLanguageText></Comment></Subelement><Subelement Path="24"><Comment><MultiLanguageText Lang="en-US">3102</MultiLanguageText></Comment></Subelement><Subelement Path="25"><Comment><MultiLanguageText Lang="en-US">3103</MultiLanguageText></Comment></Subelement><Subelement Path="26"><Comment><MultiLanguageText Lang="en-US">3104</MultiLanguageText></Comment></Subelement><Subelement Path="27"><Comment><MultiLanguageText Lang="en-US">3105</MultiLanguageText></Comment></Subelement><Subelement Path="28"><Comment><MultiLanguageText Lang="en-US">3106</MultiLanguageText></Comment></Subelement><Subelement Path="29"><Comment><MultiLanguageText Lang="en-US">3107</MultiLanguageText></Comment></Subelement><Subelement Path="30"><Comment><MultiLanguageText Lang="en-US">3108</MultiLanguageText></Comment></Subelement><Subelement Path="31"><Comment><MultiLanguageText Lang="en-US">3201</MultiLanguageText></Comment></Subelement><Subelement Path="32"><Comment><MultiLanguageText Lang="en-US">3202</MultiLanguageText></Comment></Subelement><Subelement Path="33"><Comment><MultiLanguageText Lang="en-US">3203</MultiLanguageText></Comment></Subelement><Subelement Path="34"><Comment><MultiLanguageText Lang="en-US">3204</MultiLanguageText></Comment></Subelement><Subelement Path="35"><Comment><MultiLanguageText Lang="en-US">3205</MultiLanguageText></Comment></Subelement><Subelement Path="36"><Comment><MultiLanguageText Lang="en-US">3206</MultiLanguageText></Comment></Subelement><Subelement Path="37"><Comment><MultiLanguageText Lang="en-US">3207</MultiLanguageText></Comment></Subelement><Subelement Path="38"><Comment><MultiLanguageText Lang="en-US">3208</MultiLanguageText></Comment></Subelement></Member>
+  </Section>
+</Sections></Interface>
+      <IsOnlyStoredInLoadMemory>false</IsOnlyStoredInLoadMemory>
+      <IsRetainMemResEnabled>false</IsRetainMemResEnabled>
+      <IsWriteProtectedInAS>false</IsWriteProtectedInAS>
+      <MemoryLayout>Optimized</MemoryLayout>
+      <MemoryReserve>100</MemoryReserve>
+      <Name>MC</Name>
+      <Number>1000</Number>
+      <ProgrammingLanguage>DB</ProgrammingLanguage>
+    </AttributeList>
+    <ObjectList>
+      <MultilingualText ID="1" CompositionName="Comment">
+        <ObjectList>
+          <MultilingualTextItem ID="2" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+      <MultilingualText ID="3" CompositionName="Title">
+        <ObjectList>
+          <MultilingualTextItem ID="4" CompositionName="Items">
+            <AttributeList>
+              <Culture>en-US</Culture>
+              <Text />
+            </AttributeList>
+          </MultilingualTextItem>
+        </ObjectList>
+      </MultilingualText>
+    </ObjectList>
+  </SW.Blocks.GlobalDB>
+</Document>
